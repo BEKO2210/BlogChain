@@ -31,6 +31,15 @@ app = Flask(__name__,
             template_folder='app/templates',
             static_folder='app/static')
 
+# Set up configuration
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'entwicklung_geheim_schluessel')
+app.config['UPLOAD_FOLDER'] = 'app/static/uploads'
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max upload
+
+# Get host and port from environment variables for Docker compatibility
+HOST = os.environ.get('HOST', '127.0.0.1')
+PORT = int(os.environ.get('PORT', 5000))
+
 # Filter für die Umwandlung von Unix-Timestamps in lesbare Datumsangaben
 @app.template_filter('timestamp_to_date')
 def timestamp_to_date(timestamp):
@@ -44,12 +53,9 @@ def timestamp_to_date(timestamp):
 
 # Configure Flask app
 app.config.update(
-    SECRET_KEY=os.urandom(24),
     SESSION_TYPE='filesystem',
     SESSION_PERMANENT=False,
     PERMANENT_SESSION_LIFETIME=1800,  # 30 minutes
-    MAX_CONTENT_LENGTH=10 * 1024 * 1024,  # 10 MB max upload size
-    UPLOAD_FOLDER=os.path.join(os.path.dirname(os.path.abspath(__file__)), 'data', 'uploads'),
     DATA_FOLDER=os.path.join(os.path.dirname(os.path.abspath(__file__)), 'data'),
     BLOCKCHAIN_FOLDER=os.path.join(os.path.dirname(os.path.abspath(__file__)), 'data', 'blockchain'),
     USER_FOLDER=os.path.join(os.path.dirname(os.path.abspath(__file__)), 'data', 'users'),
@@ -655,4 +661,4 @@ def internal_server_error(e):
 
 # Run the application
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    app.run(debug=True, host=HOST, port=PORT)

@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  blogchain:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    volumes:
+      - blogchain_data:/app/data
+      - blogchain_logs:/app/logs
+    restart: always
+    environment:
+      - FLASK_APP=app.py
+      - FLASK_ENV=production
+      - HOST=0.0.0.0
+
+volumes:
+  blogchain_data:
+  blogchain_logs:

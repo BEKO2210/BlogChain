@@ -24,7 +24,9 @@ BlogChain ist eine moderne Web-Anwendung, die Blogging mit Blockchain-Technologi
 - Blockchain-Implementierung
 - Kryptographische Bibliotheken
 
-## Installation
+## Installation und Start
+
+### Lokale Installation
 
 ```bash
 # Repository klonen
@@ -42,9 +44,54 @@ pip install -r requirements.txt
 python app.py
 ```
 
+### Deployment mit Docker
+
+BlogChain kann einfach mit Docker deployed werden, was eine konsistente Umgebung und einfache Installation auf jedem System ermöglicht.
+
+#### Voraussetzungen
+
+- Docker installiert
+- Docker Compose installiert
+
+#### Docker-Installation
+
+```bash
+# Repository klonen
+git clone https://github.com/BEKO2210/BlogChain.git
+cd BlogChain
+
+# Container bauen und starten
+docker-compose up -d --build
+
+# Log-Ausgabe anzeigen (optional)
+docker-compose logs -f
+```
+
+Die Anwendung ist dann unter [http://localhost:5000](http://localhost:5000) verfügbar.
+
+#### Konfiguration anpassen
+
+Sie können die Docker-Konfiguration anpassen, indem Sie die Umgebungsvariablen in der `docker-compose.yml` Datei ändern:
+
+```yaml
+environment:
+  - FLASK_APP=app.py
+  - FLASK_ENV=production
+  - HOST=0.0.0.0
+  - PORT=5000
+  - SECRET_KEY=ihr_geheimer_schluessel
+```
+
+#### Datenvolumes
+
+Die Anwendung speichert ihre Daten in Docker-Volumes, die auch bei Neustart des Containers erhalten bleiben:
+
+- `blogchain_data`: Enthält Benutzerprofile, Blockchain-Daten und Backups
+- `blogchain_logs`: Enthält Anwendungslogs
+
 ## Nutzung
 
-Nach dem Start der Anwendung kann über http://localhost:5000 auf die Plattform zugegriffen werden. Neue Benutzer können sich registrieren und sofort mit dem Erstellen von Beiträgen beginnen.
+Nach dem Start der Anwendung kann über [http://localhost:5000](http://localhost:5000) auf die Plattform zugegriffen werden. Neue Benutzer können sich registrieren und sofort mit dem Erstellen von Beiträgen beginnen.
 
 ## Lizenz
 
