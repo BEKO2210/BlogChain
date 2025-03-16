@@ -19,11 +19,11 @@
                 </div>
                 <div class="stat-title">Gesamtblöcke</div>
             </div>
-            <div class="stat-value">{{ blockchain.blocks|length }}</div>
+            <div class="stat-value">{{ blockchain.blocks|length|default(0) }}</div>
             <div class="stat-details">
                 <span class="detail-label">Letzter Block:</span>
                 <span class="detail-value">
-                    {% if last_block %}
+                    {% if blockchain and blockchain.blocks and blockchain.blocks|length > 0 and last_block %}
                     #{{ last_block.index }} ({{ last_block.timestamp|timestamp_to_date }})
                     {% else %}
                     Keine Blöcke
@@ -39,10 +39,10 @@
                 </div>
                 <div class="stat-title">Mining-Schwierigkeit</div>
             </div>
-            <div class="stat-value">{{ user.settings.mining_difficulty }}</div>
+            <div class="stat-value">{{ user.settings.mining_difficulty|default('1') }}</div>
             <div class="stat-details">
                 <span class="detail-label">Difficulty-Target:</span>
-                <span class="detail-value">{{ '0' * user.settings.mining_difficulty }}</span>
+                <span class="detail-value">{{ '0' * user.settings.mining_difficulty|default(1) }}</span>
             </div>
         </div>
         
@@ -53,10 +53,10 @@
                 </div>
                 <div class="stat-title">Einträge</div>
             </div>
-            <div class="stat-value">{{ blockchain_stats.total_entries }}</div>
+            <div class="stat-value">{{ stats.total_entries|default('0') }}</div>
             <div class="stat-details">
                 <span class="detail-label">Aktive Einträge:</span>
-                <span class="detail-value">{{ blockchain_stats.active_entries }}</span>
+                <span class="detail-value">{{ stats.active_entries|default('0') }}</span>
             </div>
         </div>
         
@@ -68,13 +68,13 @@
                 <div class="stat-title">Sicherheitsstatus</div>
             </div>
             <div class="stat-value">
-                <span class="security-status {{ 'secure' if blockchain_stats.is_valid else 'insecure' }}">
-                    {{ 'Gesichert' if blockchain_stats.is_valid else 'Fehler' }}
+                <span class="security-status {{ 'secure' if stats.is_valid|default(false) else 'insecure' }}">
+                    {{ 'Gesichert' if stats.is_valid|default(false) else 'Fehler' }}
                 </span>
             </div>
             <div class="stat-details">
                 <span class="detail-label">Letzte Validierung:</span>
-                <span class="detail-value">{{ blockchain_stats.last_validation|timestamp_to_date }}</span>
+                <span class="detail-value">{{ stats.last_validation|timestamp_to_date|default('Unbekanntes Datum') }}</span>
             </div>
         </div>
     </div>
@@ -109,7 +109,7 @@
                     <p>Erstelle ein verschlüsseltes Backup der gesamten Blockchain</p>
                 </div>
                 <div class="tool-action">
-                    <a href="{{ url_for('backup_blockchain') }}" class="btn btn-primary">
+                    <a href="{{ url_for('backup') }}" class="btn btn-primary">
                         <i class="fas fa-save"></i> Backup
                     </a>
                 </div>
@@ -139,7 +139,7 @@
                     <p>Passe die Mining-Schwierigkeit an deine Bedürfnisse an</p>
                 </div>
                 <div class="tool-action">
-                    <a href="{{ url_for('settings') }}" class="btn btn-primary">
+                    <a href="#" class="btn btn-primary">
                         <i class="fas fa-sliders-h"></i> Einstellen
                     </a>
                 </div>
@@ -170,7 +170,7 @@
             </div>
         </div>
         
-        {% if blockchain.blocks and blockchain.blocks|length > 0 %}
+        {% if blockchain and blockchain.blocks and blockchain.blocks|length > 0 %}
         <div class="block-list">
             {% for block in blockchain.blocks %}
             <div class="block-item" data-block-index="{{ block.index }}">
@@ -184,7 +184,7 @@
                         <span class="hash-value">{{ block.hash[:10] }}...{{ block.hash[-10:] }}</span>
                     </div>
                     <div class="block-entries-count">
-                        <i class="fas fa-database"></i> {{ block.data|length }} Einträge
+                        <i class="fas fa-database"></i> {{ block.data|length|default(0) }} Einträge
                     </div>
                     <div class="block-expand">
                         <i class="fas fa-chevron-down"></i>
@@ -211,14 +211,14 @@
                         </div>
                         <div class="detail-row">
                             <div class="detail-label">Schwierigkeit beim Mining:</div>
-                            <div class="detail-value">{{ block.difficulty if block.difficulty else 'N/A' }}</div>
+                            <div class="detail-value">{{ block.difficulty|default('N/A') }}</div>
                         </div>
                     </div>
                     
                     <div class="block-entries">
-                        <h4>Blockinhalt ({{ block.data|length }} Einträge)</h4>
+                        <h4>Blockinhalt ({{ block.data|length|default(0) }} Einträge)</h4>
                         
-                        {% if block.data|length > 0 %}
+                        {% if block.data|length|default(0) > 0 %}
                         <div class="entries-list">
                             {% for entry in block.data %}
                             <div class="entry-item">
@@ -268,9 +268,9 @@
                                             <div class="content-value signature">{{ entry.signature[:15] }}...{{ entry.signature[-15:] }}</div>
                                         </div>
                                         
-                                        <div class="verification-status {{ 'verified' if entry.verified else 'unverified' }}">
-                                            <i class="{{ 'fas fa-check-circle' if entry.verified else 'fas fa-times-circle' }}"></i>
-                                            {{ 'Signatur verifiziert' if entry.verified else 'Signatur nicht verifiziert' }}
+                                        <div class="verification-status {{ 'verified' if entry.verified|default(false) else 'unverified' }}">
+                                            <i class="{{ 'fas fa-check-circle' if entry.verified|default(false) else 'fas fa-times-circle' }}"></i>
+                                            {{ 'Signatur verifiziert' if entry.verified|default(false) else 'Signatur nicht verifiziert' }}
                                         </div>
                                     </div>
                                 </div>
@@ -294,7 +294,7 @@
             </div>
             <h3>Keine Blockchain-Daten verfügbar</h3>
             <p>Deine persönliche Blockchain wird initialisiert, sobald du deinen ersten Beitrag erstellst.</p>
-            <a href="{{ url_for('create_post') }}" class="btn btn-primary">
+            <a href="#" class="btn btn-primary">
                 <i class="fas fa-pen"></i> Erster Beitrag
             </a>
         </div>
@@ -306,26 +306,26 @@
             <h2><i class="fas fa-shield-alt"></i> Blockchain-Integrität</h2>
         </div>
         
-        <div class="validity-status {{ 'valid' if blockchain_stats.is_valid else 'invalid' }}">
+        <div class="validity-status {{ 'valid' if stats.is_valid|default(false) else 'invalid' }}">
             <div class="status-icon">
-                <i class="{{ 'fas fa-check-circle' if blockchain_stats.is_valid else 'fas fa-exclamation-triangle' }}"></i>
+                <i class="{{ 'fas fa-check-circle' if stats.is_valid|default(false) else 'fas fa-exclamation-triangle' }}"></i>
             </div>
             <div class="status-details">
-                <h3>{{ 'Blockchain ist gültig' if blockchain_stats.is_valid else 'Blockchain-Integrität gefährdet' }}</h3>
+                <h3>{{ 'Blockchain ist gültig' if stats.is_valid|default(false) else 'Blockchain-Integrität gefährdet' }}</h3>
                 <p>
-                    {% if blockchain_stats.is_valid %}
-                    Alle Blöcke wurden überprüft und die Blockchain-Integrität ist gesichert. Die letzte Validierung wurde am {{ blockchain_stats.last_validation|timestamp_to_date }} durchgeführt.
+                    {% if stats.is_valid|default(false) %}
+                    Alle Blöcke wurden überprüft und die Blockchain-Integrität ist gesichert. Die letzte Validierung wurde am {{ stats.last_validation|timestamp_to_date|default('Unbekanntes Datum') }} durchgeführt.
                     {% else %}
-                    Bei der letzten Überprüfung am {{ blockchain_stats.last_validation|timestamp_to_date }} wurden Integritätsprobleme festgestellt. Bitte validiere deine Blockchain, um Details zu erfahren.
+                    Bei der letzten Überprüfung am {{ stats.last_validation|timestamp_to_date|default('Unbekanntes Datum') }} wurden Integritätsprobleme festgestellt. Bitte validiere deine Blockchain, um Details zu erfahren.
                     {% endif %}
                 </p>
                 
                 <div class="validity-actions">
-                    <a href="{{ url_for('validate_blockchain') }}" class="btn {{ 'btn-secondary' if blockchain_stats.is_valid else 'btn-danger' }}">
+                    <a href="{{ url_for('validate_blockchain') }}" class="btn {{ 'btn-secondary' if stats.is_valid|default(false) else 'btn-danger' }}">
                         <i class="fas fa-sync-alt"></i> Jetzt validieren
                     </a>
                     
-                    {% if not blockchain_stats.is_valid %}
+                    {% if not stats.is_valid|default(false) %}
                     <a href="{{ url_for('repair_blockchain') }}" class="btn btn-primary">
                         <i class="fas fa-wrench"></i> Blockchain reparieren
                     </a>
@@ -342,7 +342,7 @@
         
         <div class="visualization-content">
             <div class="blockchain-chain">
-                {% if blockchain.blocks and blockchain.blocks|length > 0 %}
+                {% if blockchain and blockchain.blocks and blockchain.blocks|length > 0 %}
                     {% for block in blockchain.blocks %}
                     <div class="chain-block {{ 'genesis' if block.index == 0 }}" data-block-index="{{ block.index }}">
                         <div class="chain-block-content">
@@ -370,6 +370,11 @@
 
 {% block extra_js %}
 <script>
+    // Globale Variablen für Template-Werte
+    const totalBlocksCount = {% if blockchain and blockchain.blocks %}{{ blockchain.blocks|length }}{% else %}0{% endif %};
+    const isBlockchainValid = {% if stats and stats.is_valid %}true{% else %}false{% endif %};
+    const lastValidationDate = "{{ stats.last_validation|timestamp_to_date|default('Unbekanntes Datum') }}";
+    
     document.addEventListener('DOMContentLoaded', function() {
         // Smooth scrolling for anchor links
         document.querySelectorAll('.scroll-to').forEach(anchor => {
@@ -430,7 +435,6 @@
                     const hasPost = block.querySelector('.entry-type:contains("Beitrag")') !== null;
                     const hasComment = block.querySelector('.entry-type:contains("Kommentar")') !== null;
                     const blockIndex = parseInt(block.dataset.blockIndex);
-                    const totalBlocks = {{ blockchain.blocks|length }};
                     
                     let shouldShow = true;
                     
@@ -439,7 +443,7 @@
                     } else if (filterValue === 'with-comments') {
                         shouldShow = hasComment;
                     } else if (filterValue === 'latest') {
-                        shouldShow = blockIndex > totalBlocks - 11;
+                        shouldShow = blockIndex >= totalBlocksCount - 10;
                     }
                     
                     block.style.display = shouldShow ? 'block' : 'none';
@@ -450,39 +454,41 @@
         // Toggle block details
         function toggleBlockDetails(blockIndex) {
             const detailsElement = document.getElementById(`block-details-${blockIndex}`);
-            const blockElement = document.querySelector(`.block-item[data-block-index="${blockIndex}"]`);
-            const expandIcon = blockElement.querySelector('.block-expand i');
+            const blockItem = document.querySelector(`.block-item[data-block-index="${blockIndex}"]`);
             
-            if (detailsElement.style.display === 'block') {
-                detailsElement.style.display = 'none';
-                expandIcon.classList.replace('fa-chevron-up', 'fa-chevron-down');
-            } else {
-                detailsElement.style.display = 'block';
-                expandIcon.classList.replace('fa-chevron-down', 'fa-chevron-up');
+            if (detailsElement) {
+                if (detailsElement.classList.contains('active')) {
+                    detailsElement.classList.remove('active');
+                    blockItem.classList.remove('expanded');
+                } else {
+                    detailsElement.classList.add('active');
+                    blockItem.classList.add('expanded');
+                }
             }
         }
         
         // Toggle entry details
         function toggleEntryDetails(entryId) {
-            const detailsElement = document.getElementById(`entry-details-${entryId}`);
-            const expandIcon = document.querySelector(`#entry-details-${entryId}`).previousElementSibling.querySelector('.entry-expand i');
+            const entryDetails = document.getElementById(`entry-details-${entryId}`);
+            const entryItem = document.querySelector(`.entry-item[data-entry-id="${entryId}"]`);
+            const expandIcon = entryItem.querySelector('.entry-expand i');
             
-            if (detailsElement.style.display === 'block') {
-                detailsElement.style.display = 'none';
-                expandIcon.classList.replace('fa-minus-circle', 'fa-plus-circle');
-            } else {
-                detailsElement.style.display = 'block';
-                expandIcon.classList.replace('fa-plus-circle', 'fa-minus-circle');
+            if (entryDetails) {
+                if (entryDetails.classList.contains('active')) {
+                    entryDetails.classList.remove('active');
+                    expandIcon.classList.replace('fa-chevron-up', 'fa-chevron-down');
+                } else {
+                    entryDetails.classList.add('active');
+                    expandIcon.classList.replace('fa-chevron-down', 'fa-chevron-up');
+                }
             }
         }
         
         // Fix for the contains selector
         if (jQuery) {
-            jQuery.extend(jQuery.expr[':'], {
-                'contains': function(a, i, m) {
-                    return jQuery(a).text().indexOf(m[3]) >= 0;
-                }
-            });
+            jQuery.expr[':'].contains = function(a, i, m) {
+                return jQuery(a).text().toUpperCase().indexOf(m[3].toUpperCase()) >= 0;
+            };
         }
     });
 </script>

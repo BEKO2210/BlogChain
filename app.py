@@ -248,7 +248,7 @@ def login():
         init_user_blockchain()
         
         flash('Login successful!', 'success')
-        return redirect(url_for('profile'))
+        return redirect(url_for('feed'))
     
     return render_template('login.html')
 
@@ -471,13 +471,17 @@ def blockchain_info():
         for block in current_blockchain.chain:
             blocks.append({
                 "index": block.index,
-                "timestamp": datetime.fromtimestamp(block.timestamp).strftime('%Y-%m-%d %H:%M:%S'),
+                "timestamp": block.timestamp,
                 "data_count": len(block.data),
                 "hash": block.hash,
                 "previous_hash": block.previous_hash,
                 "nonce": block.nonce,
+                "difficulty": block.difficulty if hasattr(block, 'difficulty') else current_blockchain.difficulty,
                 "data": block.data  # Vollständige Daten für die Anzeige hinzufügen
             })
+    
+    # Get the last block
+    last_block = current_blockchain.chain[-1] if current_blockchain.chain else None
     
     return render_template(
         'blockchain_info.html',  # Korrekter Vorlagenname
@@ -485,8 +489,70 @@ def blockchain_info():
         blocks=blocks, 
         stats=stats,
         blockchain=current_blockchain,
+        last_block=last_block,
         difficulty=current_blockchain.difficulty if current_blockchain else 4
     )
+
+@app.route('/validate_blockchain')
+@login_required
+def validate_blockchain():
+    """Validate the blockchain integrity."""
+    global current_user, current_blockchain, blockchain_storage
+    
+    if not current_blockchain:
+        flash('Blockchain not initialized.', 'error')
+        return redirect(url_for('blockchain'))
+    
+    # Perform validation
+    is_valid = current_blockchain.validate_chain()
+    
+    # Update blockchain statistics
+    if blockchain_storage:
+        stats = blockchain_storage.get_chain_stats()
+        stats['is_valid'] = is_valid
+        stats['last_validation'] = time.time()
+        blockchain_storage.update_stats(stats)
+        
+    if is_valid:
+        flash('Blockchain validation successful! All blocks are valid.', 'success')
+    else:
+        flash('Blockchain validation failed! There are integrity issues.', 'error')
+    
+    return redirect(url_for('blockchain'))
+
+@app.route('/repair_blockchain')
+@login_required
+def repair_blockchain():
+    """Attempt to repair the blockchain."""
+    global current_user, current_blockchain, blockchain_storage
+    
+    if not current_blockchain:
+        flash('Blockchain not initialized.', 'error')
+        return redirect(url_for('blockchain'))
+    
+    # Simple repair strategy: Remove invalid blocks from the end until we find a valid chain
+    repaired = False
+    while len(current_blockchain.chain) > 1:  # Keep at least the genesis block
+        if current_blockchain.validate_chain():
+            repaired = True
+            break
+        else:
+            # Remove the last block
+            current_blockchain.chain.pop()
+    
+    # Update blockchain statistics
+    if blockchain_storage:
+        stats = blockchain_storage.get_chain_stats()
+        stats['is_valid'] = True
+        stats['last_validation'] = time.time()
+        blockchain_storage.update_stats(stats)
+    
+    if repaired:
+        flash('Blockchain repair successful! Invalid blocks have been removed.', 'success')
+    else:
+        flash('Blockchain repair failed. You may need to reinitialize your blockchain.', 'error')
+    
+    return redirect(url_for('blockchain'))
 
 @app.route('/backup', methods=['GET', 'POST'])
 @login_required

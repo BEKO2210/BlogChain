@@ -1,0 +1,13 @@
+{
+    "index": 0,
+    "timestamp": 1742092939.0578523,
+    "data": {
+        "type": "genesis",
+        "message": "YGo5r0c0LxqrLxh0FLtXpFYlR32hg39DDOFhL3EFhpCAjatG5zulv9UqIYfML36l1vp/XtVq53daTLyDdcYFx2bAv4RKnEaggGK9r2at2z4lfd50y5uYCTPExqGTwTtTTY9w",
+        "timestamp": 1742092939.0578504
+    },
+    "previous_hash": "0",
+    "difficulty": 4,
+    "nonce": 75220,
+    "hash": "0000ecf56b711eaaad6bf7488858983d1d771d565b01cf9e01a53b7d9c8f3625"
+}

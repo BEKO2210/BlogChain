@@ -42,6 +42,11 @@
     box-shadow: var(--card-shadow);
     padding: 20px;
     transition: all var(--transition-speed);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 .stat-card:hover {
@@ -78,11 +83,17 @@
     font-weight: 700;
     margin-bottom: 10px;
     color: var(--primary-color);
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    text-overflow: ellipsis;
+    max-width: 100%;
 }
 
 .security-status {
     font-size: 1.5rem;
     font-weight: 600;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 .security-status.secure {
@@ -97,15 +108,20 @@
     display: flex;
     flex-direction: column;
     font-size: 0.9rem;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 .detail-label {
     color: var(--text-light);
-    margin-bottom: 3px;
+    margin-bottom: 5px;
 }
 
 .detail-value {
     font-weight: 500;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%;
 }
 
 /* Blockchain Tools */

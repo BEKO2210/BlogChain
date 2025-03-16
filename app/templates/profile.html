@@ -44,16 +44,16 @@
                     <span class="stat-label">Beiträge</span>
                 </div>
                 <div class="stat">
-                    <span class="stat-value">{{ user.stats.blocks or 0 }}</span>
+                    <span class="stat-value">0</span>
                     <span class="stat-label">Blöcke</span>
                 </div>
                 <div class="stat">
-                    <span class="stat-value">{{ user.stats.total_reactions or 0 }}</span>
+                    <span class="stat-value">0</span>
                     <span class="stat-label">Reaktionen</span>
                 </div>
             </div>
             <div class="profile-actions">
-                <a href="{{ url_for('edit_profile') }}" class="btn btn-primary">
+                <a href="#" class="btn btn-primary">
                     <i class="fas fa-edit"></i> Profil bearbeiten
                 </a>
             </div>
@@ -122,20 +122,20 @@
                                 <div class="action-buttons">
                                     <button class="btn-icon reaction-btn" data-reaction="like">
                                         <i class="far fa-thumbs-up"></i>
-                                        <span class="count">{{ post.reactions.likes|default(0) }}</span>
+                                        <span class="count">0</span>
                                     </button>
                                     <button class="btn-icon reaction-btn" data-reaction="love">
                                         <i class="far fa-heart"></i>
-                                        <span class="count">{{ post.reactions.loves|default(0) }}</span>
+                                        <span class="count">0</span>
                                     </button>
                                     <button class="btn-icon comment-btn">
                                         <i class="far fa-comment"></i>
-                                        <span class="count">{{ post.comments|length|default(0) }}</span>
+                                        <span class="count">0</span>
                                     </button>
                                 </div>
                                 <div class="blockchain-info">
                                     <span class="block-number" title="Block-Nummer">
-                                        <i class="fas fa-cube"></i> #{{ post.metadata.block_index|default('?') }}
+                                        <i class="fas fa-cube"></i> #0
                                     </span>
                                 </div>
                             </div>
@@ -170,8 +170,14 @@
                                 <div class="key-item">
                                     <div class="key-label">Öffentlicher Schlüssel</div>
                                     <div class="key-value">
-                                        <div class="key-display">{{ user.public_key[:15] }}...{{ user.public_key[-15:] }}</div>
-                                        <button class="btn-icon copy-btn" data-clipboard-text="{{ user.public_key }}" title="Kopieren">
+                                        <div class="key-display">
+                                            {% if user.public_key %}
+                                                {{ user.public_key[:15] }}...{{ user.public_key[-15:] }}
+                                            {% else %}
+                                                Nicht verfügbar
+                                            {% endif %}
+                                        </div>
+                                        <button class="btn-icon copy-btn" data-clipboard-text="{{ user.public_key }}" title="Kopieren" {% if not user.public_key %}disabled{% endif %}>
                                             <i class="fas fa-copy"></i>
                                         </button>
                                     </div>

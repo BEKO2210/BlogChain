@@ -8,7 +8,7 @@
     "created_at": 1742092938,
     "last_active": 1742092938,
     "settings": {
-        "mining_difficulty": 5,
+        "mining_difficulty": 1,
         "session_timeout": 120,
         "theme": "light",
         "auto_sync": false,

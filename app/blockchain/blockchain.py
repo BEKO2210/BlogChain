@@ -210,6 +210,12 @@ class Blockchain:
         logger.info("Blockchain validated successfully")
         return True
     
+    def validate_chain(self):
+        """
+        Alias for is_chain_valid() for API compatibility.
+        """
+        return self.is_chain_valid()
+    
     def get_data_by_type(self, data_type):
         """
         Retrieve all data of a specific type from the blockchain.

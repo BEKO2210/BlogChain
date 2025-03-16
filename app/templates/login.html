@@ -3,66 +3,111 @@
 {% block title %}Login - BlockJournal{% endblock %}
 
 {% block content %}
-<div class="auth-container">
-    <div class="auth-card">
-        <div class="auth-header">
-            <h2><i class="fas fa-sign-in-alt"></i> Login</h2>
-            <p>Zugang zu deiner dezentralen Social Media Plattform</p>
-        </div>
-        
-        <form class="auth-form" method="POST" action="{{ url_for('login') }}">
-            <div class="form-group">
-                <label for="username"><i class="fas fa-user"></i> Benutzername</label>
-                <input type="text" id="username" name="username" required>
+<div class="auth-container vertical-layout">
+    <!-- Login-Bereich oben -->
+    <div class="auth-header-section">
+        <h2 class="main-title"><i class="fas fa-shield-alt"></i> BlogChain Login³</h2>
+        <p class="text-subtitle">Sicher. Dezentral. Verschlüsselt.</p>
+    </div>
+    
+    <!-- Zwei-Spalten-Layout für Login und Visualisierung -->
+    <div class="auth-main-content">
+        <!-- Linke Spalte: Login-Formular -->
+        <div class="auth-card">
+            <div class="auth-form-header">
+                <h3><i class="fas fa-user-lock"></i> Anmelden</h3>
             </div>
             
-            <div class="form-group">
-                <label for="password"><i class="fas fa-lock"></i> Passwort</label>
-                <input type="password" id="password" name="password" required>
-                <small class="password-info">
-                    <i class="fas fa-info-circle"></i> Dein Passwort wird verwendet, um deine Schlüssel abzuleiten. Stelle sicher, dass es sicher ist.
-                </small>
-            </div>
-            
-            <div class="form-actions">
-                <button type="submit" class="btn btn-primary btn-block">
-                    <i class="fas fa-unlock-alt"></i> Anmelden
-                </button>
-            </div>
-        </form>
-        
-        <div class="auth-separator">
-            <span>Noch kein Konto?</span>
+            <form class="auth-form" method="POST" action="{{ url_for('login') }}">
+                <div class="form-group">
+                    <label for="username"><i class="fas fa-user"></i> Benutzername</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password"><i class="fas fa-lock"></i> Passwort</label>
+                    <input type="password" id="password" name="password" required>
+                    <small class="password-info">
+                        <i class="fas fa-info-circle"></i> Dein Passwort wird verwendet, um deine Schlüssel abzuleiten.
+                    </small>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary btn-block">
+                        <i class="fas fa-unlock-alt"></i> Anmelden
+                    </button>
+                </div>
+                
+                <div class="auth-separator">
+                    <span>Noch kein Konto?</span>
+                </div>
+                
+                <div class="auth-footer">
+                    <a href="{{ url_for('register') }}" class="btn btn-secondary btn-block">
+                        <i class="fas fa-user-plus"></i> Registrieren
+                    </a>
+                </div>
+            </form>
         </div>
         
-        <div class="auth-footer">
-            <a href="{{ url_for('register') }}" class="btn btn-secondary btn-block">
-                <i class="fas fa-user-plus"></i> Registrieren
-            </a>
+        <!-- Rechte Spalte: Blockchain-Technologie-Info -->
+        <div class="blockchain-info-section">
+            <div class="blockchain-header">
+                <h3>Sichere <span class="highlight">Blockchain</span> Technologie</h3>
+                <p>Deine Daten werden durch fortschrittliche dezentrale Netzwerke geschützt</p>
+            </div>
+            
+            <!-- Trust-Badges -->
+            <div class="trust-badges">
+                <div class="badge">
+                    <i class="fas fa-shield-check"></i>
+                    <span>End-to-End Verschlüsselt</span>
+                </div>
+                <div class="badge">
+                    <i class="fas fa-fingerprint"></i>
+                    <span>Sichere Authentifizierung</span>
+                </div>
+            </div>
         </div>
     </div>
     
-    <div class="auth-info">
-        <div class="security-features">
-            <h3><i class="fas fa-shield-alt"></i> Sicherheitsmerkmale</h3>
-            <ul>
-                <li><i class="fas fa-check"></i> Ende-zu-Ende-Verschlüsselung</li>
-                <li><i class="fas fa-check"></i> Blockchain-gesicherte Daten</li>
-                <li><i class="fas fa-check"></i> Kein zentraler Server</li>
-                <li><i class="fas fa-check"></i> Keine Datenspeicherung in der Cloud</li>
-                <li><i class="fas fa-check"></i> Volle Kontrolle über deine Daten</li>
-            </ul>
+    <!-- Sicherheitsfeatures in voller Breite -->
+    <div class="security-section">
+        <div class="section-title">
+            <h3>Hochmoderne Sicherheitsfeatures</h3>
+            <div class="title-line"></div>
         </div>
         
-        <div class="blockchain-visual">
-            <div class="chain">
-                <div class="block-anim"><i class="fas fa-lock"></i></div>
-                <div class="chain-link"></div>
-                <div class="block-anim"><i class="fas fa-user-shield"></i></div>
-                <div class="chain-link"></div>
-                <div class="block-anim"><i class="fas fa-shield-alt"></i></div>
+        <div class="features-grid">
+            <div class="feature-item">
+                <i class="fas fa-lock-alt"></i>
+                <h4>End-to-End Verschlüsselung</h4>
+                <p>Alle Daten werden vor der Übertragung verschlüsselt und können nur vom Empfänger entschlüsselt werden.</p>
+            </div>
+            
+            <div class="feature-item">
+                <i class="fas fa-link"></i>
+                <h4>Blockchain Integrität</h4>
+                <p>Die Kette von kryptografisch gesicherten Blöcken garantiert die Unveränderbarkeit deiner Daten.</p>
+            </div>
+            
+            <div class="feature-item">
+                <i class="fas fa-project-diagram"></i>
+                <h4>Dezentralisierung</h4>
+                <p>Keine zentrale Kontrolle bedeutet erhöhte Ausfallsicherheit und Schutz gegen Kompromittierung.</p>
+            </div>
+            
+            <div class="feature-item">
+                <i class="fas fa-cloud-slash"></i>
+                <h4>Keine Cloud-Abhängigkeit</h4>
+                <p>Deine Daten werden nicht in anfälligen zentralisierten Cloud-Diensten gespeichert.</p>
             </div>
         </div>
+    </div>
+    
+    <!-- Footer-Bereich -->
+    <div class="blockchain-footer">
+        <a href="#" class="info-btn"><i class="fas fa-info-circle"></i> Mehr zur Blockchain-Sicherheit</a>
     </div>
 </div>
 {% endblock %}
@@ -70,30 +115,24 @@
 {% block extra_js %}
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Animate the blockchain blocks
-        const blocks = document.querySelectorAll('.block-anim');
-        blocks.forEach((block, index) => {
-            setTimeout(() => {
-                block.classList.add('pulse');
-            }, index * 500);
-        });
-        
         // Password strength visual indicator
         const passwordInput = document.getElementById('password');
-        if (passwordInput) {
+        const strengthIndicator = document.querySelector('.password-strength');
+        
+        if (passwordInput && strengthIndicator) {
             passwordInput.addEventListener('input', function() {
-                const password = this.value;
-                let strengthClass = 'weak';
+                const value = this.value;
+                let strength = 0;
                 
-                if (password.length > 10 && /[A-Z]/.test(password) && /[a-z]/.test(password) && 
-                    /[0-9]/.test(password) && /[^A-Za-z0-9]/.test(password)) {
-                    strengthClass = 'strong';
-                } else if (password.length > 8 && /[A-Za-z]/.test(password) && /[0-9]/.test(password)) {
-                    strengthClass = 'medium';
-                }
+                if (value.length >= 8) strength += 1;
+                if (value.match(/[A-Z]/)) strength += 1;
+                if (value.match(/[0-9]/)) strength += 1;
+                if (value.match(/[^A-Za-z0-9]/)) strength += 1;
                 
-                this.classList.remove('weak', 'medium', 'strong');
-                this.classList.add(strengthClass);
+                const strengthClass = ['weak', 'medium', 'strong', 'very-strong'][strength] || '';
+                
+                strengthIndicator.className = 'password-strength ' + strengthClass;
+                strengthIndicator.setAttribute('data-strength', strengthClass);
             });
         }
     });
