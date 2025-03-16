@@ -98,6 +98,11 @@ Nach dem Start der Anwendung kann über [http://localhost:5000](http://localhost
 Dieses Projekt steht unter der MIT-Lizenz.
 
 
+
+
+
+
+
 BlogChain
 
 A secure and decentralized blog platform based on blockchain technology.
@@ -139,7 +144,7 @@ Cryptographic Libraries
 Installation and Startup
 
 Local Installation
-
+```bash
 # Clone the repository  
 git clone https://github.com/BEKO2210/BlogChain.git  
 cd BlogChain  
@@ -153,7 +158,7 @@ pip install -r requirements.txt
 
 # Start the application  
 python app.py
-
+```
 Deployment with Docker
 
 BlogChain can be easily deployed using Docker, ensuring a consistent environment and simple installation on any system.
@@ -166,7 +171,7 @@ Docker Compose installed
 
 
 Docker Installation
-
+```bash
 # Clone the repository  
 git clone https://github.com/BEKO2210/BlogChain.git  
 cd BlogChain  
@@ -176,7 +181,7 @@ docker-compose up -d --build
 
 # View logs (optional)  
 docker-compose logs -f
-
+```
 The application will then be available at http://localhost:5000.
 
 Configuration
