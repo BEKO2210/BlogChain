@@ -103,15 +103,15 @@ Dieses Projekt steht unter der MIT-Lizenz.
 
 
 
-BlogChain
+#BlogChain
 
 A secure and decentralized blog platform based on blockchain technology.
 
-Description
+##Description
 
 BlogChain is a modern web application that combines blogging with blockchain technology. The platform allows users to create posts that are stored in a personal blockchain, ensuring immutability and security.
 
-Main Features
+##Main Features
 
 Blockchain-Based Storage: All posts are securely stored in a personal blockchain
 
@@ -126,7 +126,7 @@ Blockchain Validation: Ensures the integrity of the blockchain
 Backup Functionality: Creates encrypted backups of the blockchain
 
 
-Technologies
+##Technologies
 
 Python (Flask)
 
@@ -141,7 +141,7 @@ Blockchain Implementation
 Cryptographic Libraries
 
 
-Installation and Startup
+##Installation and Startup
 
 Local Installation
 ```bash
