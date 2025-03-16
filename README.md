@@ -183,12 +183,14 @@ Configuration
 
 You can adjust the Docker configuration by modifying environment variables in the docker-compose.yml file:
 
+```bash
 environment:
   - FLASK_APP=app.py
   - FLASK_ENV=production
   - HOST=0.0.0.0
   - PORT=5000
   - SECRET_KEY=your_secret_key
+```
 
 Data Volumes
 
