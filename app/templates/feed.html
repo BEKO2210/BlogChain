@@ -1,0 +1,424 @@
+{% extends "base.html" %}
+
+{% block title %}Feed - BlockJournal{% endblock %}
+
+{% block content %}
+<div class="feed-container">
+    <div class="sidebar">
+        <div class="user-profile-card">
+            <div class="profile-header">
+                <div class="profile-avatar">
+                    {% if user.profile.avatar %}
+                    <img src="{{ user.profile.avatar }}" alt="{{ user.username }}">
+                    {% else %}
+                    <div class="default-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="profile-info">
+                    <h3>{{ user.profile.display_name or user.username }}</h3>
+                    <p class="user-id">ID: {{ user.user_id[:8] }}...</p>
+                </div>
+            </div>
+            <div class="profile-stats">
+                <div class="stat">
+                    <span class="stat-value">{{ posts|length }}</span>
+                    <span class="stat-label">Beiträge</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-value">{{ user.created_at|timestamp_to_date }}</span>
+                    <span class="stat-label">Dabei seit</span>
+                </div>
+            </div>
+            <div class="blockchain-status">
+                <div class="status-item">
+                    <i class="fas fa-cube"></i>
+                    <span>Blockchain-Status: <span class="status-value online">Aktiv</span></span>
+                </div>
+                <div class="status-item">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Sicherheitsstufe: <span class="status-value">{{ user.settings.mining_difficulty }}</span></span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="quick-actions">
+            <h3>Schnellaktionen</h3>
+            <div class="action-buttons">
+                <a href="{{ url_for('create_post') }}" class="btn btn-primary">
+                    <i class="fas fa-pen"></i> Neuer Beitrag
+                </a>
+                <a href="{{ url_for('profile') }}" class="btn btn-secondary">
+                    <i class="fas fa-user"></i> Mein Profil
+                </a>
+                <a href="{{ url_for('blockchain_info') }}" class="btn btn-secondary">
+                    <i class="fas fa-cube"></i> Blockchain-Info
+                </a>
+            </div>
+        </div>
+        
+        <div class="mining-control">
+            <h3>Mining-Steuerung</h3>
+            <div class="mining-settings">
+                <div class="difficulty-slider">
+                    <label for="difficulty-range">Schwierigkeit ({{ user.settings.mining_difficulty }})</label>
+                    <input type="range" id="difficulty-range" min="1" max="8" value="{{ user.settings.mining_difficulty }}" disabled>
+                    <div class="slider-labels">
+                        <span>Schneller</span>
+                        <span>Sicherer</span>
+                    </div>
+                </div>
+                <small>Die Mining-Schwierigkeit kann in den Einstellungen geändert werden.</small>
+            </div>
+        </div>
+    </div>
+    
+    <div class="main-feed">
+        <div class="create-post-card">
+            <form action="{{ url_for('create_post') }}" method="POST">
+                <div class="post-input-container">
+                    <div class="user-avatar">
+                        {% if user.profile.avatar %}
+                        <img src="{{ user.profile.avatar }}" alt="{{ user.username }}">
+                        {% else %}
+                        <div class="default-avatar small">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div class="post-input">
+                        <textarea name="content" placeholder="Was möchtest du teilen?" required></textarea>
+                    </div>
+                </div>
+                <div class="post-actions">
+                    <div class="post-options">
+                        <button type="button" class="btn-icon" title="Bild hinzufügen">
+                            <i class="fas fa-image"></i>
+                        </button>
+                        <button type="button" class="btn-icon" title="Tags hinzufügen">
+                            <i class="fas fa-hashtag"></i>
+                        </button>
+                    </div>
+                    <div class="post-submit">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-paper-plane"></i> Veröffentlichen
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        
+        <div class="posts-feed">
+            <h2>Neueste Beiträge</h2>
+            
+            {% if posts %}
+                {% for post in posts %}
+                <div class="post-card" data-post-id="{{ post.post_id }}">
+                    <div class="post-header">
+                        <div class="post-author">
+                            <div class="author-avatar">
+                                <div class="default-avatar small">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                            </div>
+                            <div class="author-info">
+                                <h4 class="author-name">{{ post.author_id }}</h4>
+                                <span class="post-time">{{ post.created_at|timestamp_to_date }}</span>
+                            </div>
+                        </div>
+                        <div class="post-security">
+                            <span class="verified-badge" title="Signatur verifiziert">
+                                <i class="fas fa-check-circle"></i>
+                            </span>
+                            <span class="encrypted-badge" title="Ende-zu-Ende-verschlüsselt">
+                                <i class="fas fa-lock"></i>
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <div class="post-content">
+                        <p>{{ post.content }}</p>
+                    </div>
+                    
+                    {% if post.tags %}
+                    <div class="post-tags">
+                        {% for tag in post.tags %}
+                        <span class="tag">#{{ tag }}</span>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                    
+                    <div class="post-actions">
+                        <div class="action-buttons">
+                            <button class="btn-icon reaction-btn" data-reaction="like">
+                                <i class="far fa-thumbs-up"></i>
+                                <span class="count">0</span>
+                            </button>
+                            <button class="btn-icon reaction-btn" data-reaction="love">
+                                <i class="far fa-heart"></i>
+                                <span class="count">0</span>
+                            </button>
+                            <button class="btn-icon comment-btn">
+                                <i class="far fa-comment"></i>
+                                <span class="count">0</span>
+                            </button>
+                        </div>
+                        <div class="blockchain-info">
+                            <span class="block-number" title="Block-Nummer">
+                                <i class="fas fa-cube"></i> #{{ post.metadata.block_index|default('?') }}
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <div class="post-comments hidden">
+                        <div class="comment-form">
+                            <div class="comment-input-container">
+                                <div class="user-avatar">
+                                    <div class="default-avatar small">
+                                        <i class="fas fa-user"></i>
+                                    </div>
+                                </div>
+                                <div class="comment-input">
+                                    <textarea placeholder="Schreibe einen Kommentar..."></textarea>
+                                </div>
+                            </div>
+                            <div class="comment-actions">
+                                <button class="btn btn-small btn-primary submit-comment">
+                                    <i class="fas fa-reply"></i> Kommentieren
+                                </button>
+                            </div>
+                        </div>
+                        <div class="comments-list">
+                            <!-- Kommentare werden dynamisch hinzugefügt -->
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="empty-state">
+                    <div class="empty-icon">
+                        <i class="fas fa-cubes"></i>
+                    </div>
+                    <h3>Keine Beiträge vorhanden</h3>
+                    <p>Erstelle deinen ersten Beitrag, um deine persönliche Blockchain zu starten!</p>
+                    <a href="{{ url_for('create_post') }}" class="btn btn-primary">
+                        <i class="fas fa-pen"></i> Erster Beitrag
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    
+    <div class="info-sidebar">
+        <div class="blockchain-info-card">
+            <h3><i class="fas fa-cube"></i> Blockchain-Status</h3>
+            <div class="info-stats">
+                <div class="info-stat">
+                    <span class="stat-label">Blöcke</span>
+                    <span class="stat-value" id="block-count">{{ blocks|default(1) }}</span>
+                </div>
+                <div class="info-stat">
+                    <span class="stat-label">Letzte Aktualisierung</span>
+                    <span class="stat-value" id="last-update">{{ last_update|default('Gerade eben') }}</span>
+                </div>
+                <div class="info-stat">
+                    <span class="stat-label">Mining-Schwierigkeit</span>
+                    <span class="stat-value" id="mining-difficulty">{{ user.settings.mining_difficulty }}</span>
+                </div>
+            </div>
+            <a href="{{ url_for('blockchain_info') }}" class="btn btn-small btn-secondary">
+                Details anzeigen
+            </a>
+        </div>
+        
+        <div class="security-status-card">
+            <h3><i class="fas fa-shield-alt"></i> Sicherheitsstatus</h3>
+            <div class="security-indicators">
+                <div class="security-indicator">
+                    <div class="indicator-icon secure">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <div class="indicator-details">
+                        <span class="indicator-name">Verschlüsselung</span>
+                        <span class="indicator-status">Aktiv</span>
+                    </div>
+                </div>
+                <div class="security-indicator">
+                    <div class="indicator-icon secure">
+                        <i class="fas fa-signature"></i>
+                    </div>
+                    <div class="indicator-details">
+                        <span class="indicator-name">Digitale Signatur</span>
+                        <span class="indicator-status">Aktiv</span>
+                    </div>
+                </div>
+                <div class="security-indicator">
+                    <div class="indicator-icon secure">
+                        <i class="fas fa-server"></i>
+                    </div>
+                    <div class="indicator-details">
+                        <span class="indicator-name">Dezentrale Speicherung</span>
+                        <span class="indicator-status">Aktiv</span>
+                    </div>
+                </div>
+                <div class="security-indicator">
+                    <div class="indicator-icon secure">
+                        <i class="fas fa-user-shield"></i>
+                    </div>
+                    <div class="indicator-details">
+                        <span class="indicator-name">Datenschutz</span>
+                        <span class="indicator-status">Maximiert</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="system-status-card">
+            <h3><i class="fas fa-heartbeat"></i> Systemstatus</h3>
+            <div class="status-indicators">
+                <div class="status-line">
+                    <span class="status-name">Session</span>
+                    <span class="status-value online">Aktiv</span>
+                </div>
+                <div class="status-line">
+                    <span class="status-name">Ablauf</span>
+                    <span class="status-value" id="session-expires">
+                        <span id="session-countdown">30:00</span>
+                    </span>
+                </div>
+                <div class="status-line">
+                    <span class="status-name">Speicherort</span>
+                    <span class="status-value">Lokal</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Toggle comments visibility
+        const commentBtns = document.querySelectorAll('.comment-btn');
+        commentBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const postCard = this.closest('.post-card');
+                const commentsSection = postCard.querySelector('.post-comments');
+                commentsSection.classList.toggle('hidden');
+            });
+        });
+        
+        // Handle like/love reactions
+        const reactionBtns = document.querySelectorAll('.reaction-btn');
+        reactionBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const icon = this.querySelector('i');
+                const countEl = this.querySelector('.count');
+                const count = parseInt(countEl.textContent);
+                
+                if (icon.classList.contains('far')) {
+                    // Add reaction
+                    icon.classList.replace('far', 'fas');
+                    countEl.textContent = count + 1;
+                    
+                    // TODO: Send reaction to server
+                    const postId = this.closest('.post-card').dataset.postId;
+                    const reactionType = this.dataset.reaction;
+                    console.log(`Adding ${reactionType} reaction to post ${postId}`);
+                } else {
+                    // Remove reaction
+                    icon.classList.replace('fas', 'far');
+                    countEl.textContent = Math.max(0, count - 1);
+                    
+                    // TODO: Remove reaction from server
+                    const postId = this.closest('.post-card').dataset.postId;
+                    const reactionType = this.dataset.reaction;
+                    console.log(`Removing ${reactionType} reaction from post ${postId}`);
+                }
+            });
+        });
+        
+        // Handle comment submission
+        const submitCommentBtns = document.querySelectorAll('.submit-comment');
+        submitCommentBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const commentForm = this.closest('.comment-form');
+                const textarea = commentForm.querySelector('textarea');
+                const comment = textarea.value.trim();
+                
+                if (comment) {
+                    // TODO: Send comment to server
+                    const postCard = this.closest('.post-card');
+                    const postId = postCard.dataset.postId;
+                    console.log(`Adding comment to post ${postId}: ${comment}`);
+                    
+                    // Clear textarea
+                    textarea.value = '';
+                    
+                    // Create comment element (for demonstration)
+                    const commentsList = postCard.querySelector('.comments-list');
+                    const commentEl = document.createElement('div');
+                    commentEl.className = 'comment';
+                    commentEl.innerHTML = `
+                        <div class="comment-header">
+                            <div class="comment-author">
+                                <div class="author-avatar">
+                                    <div class="default-avatar extra-small">
+                                        <i class="fas fa-user"></i>
+                                    </div>
+                                </div>
+                                <div class="author-info">
+                                    <h5 class="author-name">${currentUser.username}</h5>
+                                    <span class="comment-time">Gerade eben</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="comment-content">
+                            <p>${comment}</p>
+                        </div>
+                    `;
+                    commentsList.appendChild(commentEl);
+                    
+                    // Update comment count
+                    const countEl = postCard.querySelector('.comment-btn .count');
+                    const count = parseInt(countEl.textContent);
+                    countEl.textContent = count + 1;
+                }
+            });
+        });
+        
+        // Session countdown
+        let sessionMinutes = {{ user.settings.session_timeout }};
+        let sessionSeconds = 0;
+        const sessionCountdown = document.getElementById('session-countdown');
+        
+        function updateSessionCountdown() {
+            if (sessionSeconds <= 0) {
+                sessionMinutes--;
+                sessionSeconds = 59;
+            } else {
+                sessionSeconds--;
+            }
+            
+            if (sessionMinutes <= 0 && sessionSeconds <= 0) {
+                // Session expired
+                clearInterval(countdownInterval);
+                window.location.href = "{{ url_for('logout') }}";
+                return;
+            }
+            
+            sessionCountdown.textContent = `${sessionMinutes.toString().padStart(2, '0')}:${sessionSeconds.toString().padStart(2, '0')}`;
+        }
+        
+        const countdownInterval = setInterval(updateSessionCountdown, 1000);
+        
+        // Simulate current user for comment functionality
+        const currentUser = {
+            username: "{{ user.username }}",
+            id: "{{ user.user_id }}"
+        };
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,47 @@
+2025-03-16 03:42:19 - app.blockchain.storage - INFO - Blockchain storage initialized for user c29b87b0-bd35-4090-a693-483406721d9c
+2025-03-16 03:42:19 - app.blockchain.storage - WARNING - Chain index file C:\Users\belki\Desktop\BlogChain\data\blockchain\c29b87b0-bd35-4090-a693-483406721d9c\chain_index.json does not exist
+2025-03-16 03:42:19 - app.blockchain.storage - WARNING - No chain index found for user c29b87b0-bd35-4090-a693-483406721d9c
+2025-03-16 03:42:19 - app.blockchain.storage - INFO - Chain index saved to C:\Users\belki\Desktop\BlogChain\data\blockchain\c29b87b0-bd35-4090-a693-483406721d9c\chain_index.json
+2025-03-16 03:42:19 - app.blockchain.storage - INFO - Blockchain saved for user c29b87b0-bd35-4090-a693-483406721d9c
+2025-03-16 03:43:14 - app.blockchain.storage - INFO - Blockchain storage initialized for user c29b87b0-bd35-4090-a693-483406721d9c
+2025-03-16 03:43:14 - app.blockchain.storage - INFO - Chain index loaded from C:\Users\belki\Desktop\BlogChain\data\blockchain\c29b87b0-bd35-4090-a693-483406721d9c\chain_index.json
+2025-03-16 03:43:14 - app.blockchain.storage - INFO - Blockchain loaded for user c29b87b0-bd35-4090-a693-483406721d9c with 1 blocks
+2025-03-16 03:48:59 - app.blockchain.storage - INFO - Blockchain storage initialized for user c29b87b0-bd35-4090-a693-483406721d9c
+2025-03-16 03:48:59 - app.blockchain.storage - INFO - Chain index loaded from C:\Users\belki\Desktop\BlogChain\data\blockchain\c29b87b0-bd35-4090-a693-483406721d9c\chain_index.json
+2025-03-16 03:48:59 - app.blockchain.storage - INFO - Blockchain loaded for user c29b87b0-bd35-4090-a693-483406721d9c with 1 blocks
+2025-03-16 03:51:30 - app.blockchain.storage - INFO - Blockchain storage initialized for user c29b87b0-bd35-4090-a693-483406721d9c
+2025-03-16 03:51:30 - app.blockchain.storage - INFO - Chain index loaded from C:\Users\belki\Desktop\BlogChain\data\blockchain\c29b87b0-bd35-4090-a693-483406721d9c\chain_index.json
+2025-03-16 03:51:31 - app.blockchain.storage - INFO - Blockchain loaded for user c29b87b0-bd35-4090-a693-483406721d9c with 1 blocks
+2025-03-16 03:52:03 - app.blockchain.storage - INFO - Blockchain storage initialized for user c29b87b0-bd35-4090-a693-483406721d9c
+2025-03-16 03:52:03 - app.blockchain.storage - INFO - Chain index loaded from C:\Users\belki\Desktop\BlogChain\data\blockchain\c29b87b0-bd35-4090-a693-483406721d9c\chain_index.json
+2025-03-16 03:52:05 - app.blockchain.storage - INFO - Blockchain loaded for user c29b87b0-bd35-4090-a693-483406721d9c with 1 blocks
+2025-03-16 03:58:25 - app.blockchain.storage - INFO - Blockchain storage initialized for user c29b87b0-bd35-4090-a693-483406721d9c
+2025-03-16 03:58:25 - app.blockchain.storage - INFO - Chain index loaded from C:\Users\belki\Desktop\BlogChain\data\blockchain\c29b87b0-bd35-4090-a693-483406721d9c\chain_index.json
+2025-03-16 03:58:27 - app.blockchain.storage - INFO - Blockchain loaded for user c29b87b0-bd35-4090-a693-483406721d9c with 1 blocks
+2025-03-16 03:59:36 - app.blockchain.storage - INFO - Chain index loaded from C:\Users\belki\Desktop\BlogChain\data\blockchain\c29b87b0-bd35-4090-a693-483406721d9c\chain_index.json
+2025-03-16 03:59:36 - app.blockchain.storage - INFO - Chain stats retrieved for user c29b87b0-bd35-4090-a693-483406721d9c
+2025-03-16 03:59:41 - app.blockchain.storage - INFO - Chain index loaded from C:\Users\belki\Desktop\BlogChain\data\blockchain\c29b87b0-bd35-4090-a693-483406721d9c\chain_index.json
+2025-03-16 03:59:41 - app.blockchain.storage - INFO - Chain stats retrieved for user c29b87b0-bd35-4090-a693-483406721d9c
+2025-03-16 04:00:00 - app.blockchain.storage - INFO - Chain index loaded from C:\Users\belki\Desktop\BlogChain\data\blockchain\c29b87b0-bd35-4090-a693-483406721d9c\chain_index.json
+2025-03-16 04:00:00 - app.blockchain.storage - INFO - Chain stats retrieved for user c29b87b0-bd35-4090-a693-483406721d9c
+2025-03-16 04:00:15 - app.blockchain.storage - INFO - Blockchain storage initialized for user c29b87b0-bd35-4090-a693-483406721d9c
+2025-03-16 04:00:15 - app.blockchain.storage - INFO - Chain index loaded from C:\Users\belki\Desktop\BlogChain\data\blockchain\c29b87b0-bd35-4090-a693-483406721d9c\chain_index.json
+2025-03-16 04:00:15 - app.blockchain.storage - ERROR - Failed to load blockchain: SecretBox must be created from 32 bytes
+2025-03-16 04:05:24 - app.blockchain.storage - INFO - Blockchain storage initialized for user c29b87b0-bd35-4090-a693-483406721d9c
+2025-03-16 04:05:24 - app.blockchain.storage - INFO - Chain index loaded from C:\Users\belki\Desktop\BlogChain\data\blockchain\c29b87b0-bd35-4090-a693-483406721d9c\chain_index.json
+2025-03-16 04:05:24 - app.blockchain.storage - ERROR - Failed to load blockchain: object of type 'NoneType' has no len()
+2025-03-16 04:05:58 - app.blockchain.storage - INFO - Blockchain storage initialized for user c29b87b0-bd35-4090-a693-483406721d9c
+2025-03-16 04:05:58 - app.blockchain.storage - INFO - Chain index loaded from C:\Users\belki\Desktop\BlogChain\data\blockchain\c29b87b0-bd35-4090-a693-483406721d9c\chain_index.json
+2025-03-16 04:05:58 - app.blockchain.storage - ERROR - Failed to load blockchain: object of type 'NoneType' has no len()
+2025-03-16 04:06:58 - app.blockchain.storage - INFO - Blockchain storage initialized for user c29b87b0-bd35-4090-a693-483406721d9c
+2025-03-16 04:06:58 - app.blockchain.storage - INFO - Chain index loaded from C:\Users\belki\Desktop\BlogChain\data\blockchain\c29b87b0-bd35-4090-a693-483406721d9c\chain_index.json
+2025-03-16 04:06:58 - app.blockchain.storage - ERROR - Failed to load blockchain: object of type 'NoneType' has no len()
+2025-03-16 04:11:54 - app.blockchain.storage - INFO - Blockchain storage initialized for user c29b87b0-bd35-4090-a693-483406721d9c
+2025-03-16 04:11:54 - app.blockchain.storage - INFO - Chain index loaded from C:\Users\belki\Desktop\BlogChain\data\blockchain\c29b87b0-bd35-4090-a693-483406721d9c\chain_index.json
+2025-03-16 04:11:56 - app.blockchain.storage - INFO - Blockchain loaded for user c29b87b0-bd35-4090-a693-483406721d9c with 1 blocks
+2025-03-16 04:12:19 - app.blockchain.storage - INFO - Chain index saved to C:\Users\belki\Desktop\BlogChain\data\blockchain\c29b87b0-bd35-4090-a693-483406721d9c\chain_index.json
+2025-03-16 04:12:19 - app.blockchain.storage - INFO - Blockchain saved for user c29b87b0-bd35-4090-a693-483406721d9c
+2025-03-16 04:12:32 - app.blockchain.storage - INFO - Chain index loaded from C:\Users\belki\Desktop\BlogChain\data\blockchain\c29b87b0-bd35-4090-a693-483406721d9c\chain_index.json
+2025-03-16 04:12:32 - app.blockchain.storage - INFO - Chain stats retrieved for user c29b87b0-bd35-4090-a693-483406721d9c
+2025-03-16 04:12:48 - app.blockchain.storage - INFO - Chain index loaded from C:\Users\belki\Desktop\BlogChain\data\blockchain\c29b87b0-bd35-4090-a693-483406721d9c\chain_index.json
+2025-03-16 04:12:48 - app.blockchain.storage - INFO - Chain stats retrieved for user c29b87b0-bd35-4090-a693-483406721d9c

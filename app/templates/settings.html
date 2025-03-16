@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block title %}Einstellungen - BlockJournal{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="settings-container">
+        <h1 class="page-title">Einstellungen</h1>
+        
+        <div class="flash-messages">
+            {% for category, message in get_flashed_messages(with_categories=true) %}
+                <div class="alert alert-{{ category }}">{{ message }}</div>
+            {% endfor %}
+        </div>
+        
+        <form method="POST" action="{{ url_for('settings') }}" class="settings-form">
+            <div class="form-section">
+                <h2>Profil-Einstellungen</h2>
+                
+                <div class="form-group">
+                    <label for="display_name">Anzeigename:</label>
+                    <input type="text" id="display_name" name="display_name" 
+                           value="{{ user.profile.display_name or '' }}" 
+                           placeholder="Anzeigename">
+                </div>
+                
+                <div class="form-group">
+                    <label for="bio">Biografie:</label>
+                    <textarea id="bio" name="bio" rows="4" 
+                              placeholder="Beschreiben Sie sich kurz...">{{ user.profile.bio or '' }}</textarea>
+                </div>
+            </div>
+            
+            <div class="form-section">
+                <h2>Blockchain-Einstellungen</h2>
+                
+                <div class="form-group">
+                    <label for="mining_difficulty">Mining-Schwierigkeit:</label>
+                    <input type="number" id="mining_difficulty" name="mining_difficulty" 
+                           value="{{ user.settings.mining_difficulty or 4 }}" min="1" max="6">
+                    <span class="form-hint">Höhere Werte bedeuten mehr Sicherheit, aber langsameres Mining.</span>
+                </div>
+            </div>
+            
+            <div class="form-section">
+                <h2>App-Einstellungen</h2>
+                
+                <div class="form-group">
+                    <label for="session_timeout">Sitzungs-Timeout (Minuten):</label>
+                    <input type="number" id="session_timeout" name="session_timeout" 
+                           value="{{ user.settings.session_timeout or 30 }}" min="5" max="120">
+                </div>
+                
+                <div class="form-group">
+                    <label for="theme">Theme:</label>
+                    <select id="theme" name="theme">
+                        <option value="light" {% if user.settings.theme == 'light' %}selected{% endif %}>Hell</option>
+                        <option value="dark" {% if user.settings.theme == 'dark' %}selected{% endif %}>Dunkel</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Einstellungen speichern</button>
+                <a href="{{ url_for('profile') }}" class="btn btn-secondary">Abbrechen</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Theme-Vorschau beim Ändern der Auswahl
+        const themeSelector = document.getElementById('theme');
+        themeSelector.addEventListener('change', function() {
+            const selectedTheme = this.value;
+            // Hier könnte Theme-Vorschau-Logik implementiert werden
+        });
+    });
+</script>
+{% endblock %}

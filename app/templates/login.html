@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+
+{% block title %}Login - BlockJournal{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="auth-card">
+        <div class="auth-header">
+            <h2><i class="fas fa-sign-in-alt"></i> Login</h2>
+            <p>Zugang zu deiner dezentralen Social Media Plattform</p>
+        </div>
+        
+        <form class="auth-form" method="POST" action="{{ url_for('login') }}">
+            <div class="form-group">
+                <label for="username"><i class="fas fa-user"></i> Benutzername</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="password"><i class="fas fa-lock"></i> Passwort</label>
+                <input type="password" id="password" name="password" required>
+                <small class="password-info">
+                    <i class="fas fa-info-circle"></i> Dein Passwort wird verwendet, um deine Schlüssel abzuleiten. Stelle sicher, dass es sicher ist.
+                </small>
+            </div>
+            
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary btn-block">
+                    <i class="fas fa-unlock-alt"></i> Anmelden
+                </button>
+            </div>
+        </form>
+        
+        <div class="auth-separator">
+            <span>Noch kein Konto?</span>
+        </div>
+        
+        <div class="auth-footer">
+            <a href="{{ url_for('register') }}" class="btn btn-secondary btn-block">
+                <i class="fas fa-user-plus"></i> Registrieren
+            </a>
+        </div>
+    </div>
+    
+    <div class="auth-info">
+        <div class="security-features">
+            <h3><i class="fas fa-shield-alt"></i> Sicherheitsmerkmale</h3>
+            <ul>
+                <li><i class="fas fa-check"></i> Ende-zu-Ende-Verschlüsselung</li>
+                <li><i class="fas fa-check"></i> Blockchain-gesicherte Daten</li>
+                <li><i class="fas fa-check"></i> Kein zentraler Server</li>
+                <li><i class="fas fa-check"></i> Keine Datenspeicherung in der Cloud</li>
+                <li><i class="fas fa-check"></i> Volle Kontrolle über deine Daten</li>
+            </ul>
+        </div>
+        
+        <div class="blockchain-visual">
+            <div class="chain">
+                <div class="block-anim"><i class="fas fa-lock"></i></div>
+                <div class="chain-link"></div>
+                <div class="block-anim"><i class="fas fa-user-shield"></i></div>
+                <div class="chain-link"></div>
+                <div class="block-anim"><i class="fas fa-shield-alt"></i></div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Animate the blockchain blocks
+        const blocks = document.querySelectorAll('.block-anim');
+        blocks.forEach((block, index) => {
+            setTimeout(() => {
+                block.classList.add('pulse');
+            }, index * 500);
+        });
+        
+        // Password strength visual indicator
+        const passwordInput = document.getElementById('password');
+        if (passwordInput) {
+            passwordInput.addEventListener('input', function() {
+                const password = this.value;
+                let strengthClass = 'weak';
+                
+                if (password.length > 10 && /[A-Z]/.test(password) && /[a-z]/.test(password) && 
+                    /[0-9]/.test(password) && /[^A-Za-z0-9]/.test(password)) {
+                    strengthClass = 'strong';
+                } else if (password.length > 8 && /[A-Za-z]/.test(password) && /[0-9]/.test(password)) {
+                    strengthClass = 'medium';
+                }
+                
+                this.classList.remove('weak', 'medium', 'strong');
+                this.classList.add(strengthClass);
+            });
+        }
+    });
+</script>
+{% endblock %}

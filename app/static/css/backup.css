@@ -1,0 +1,208 @@
+/* Backup Page Styles */
+.backup-container {
+    max-width: 900px;
+    margin: 20px auto;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 25px;
+}
+
+.info-panel {
+    background-color: #f8f9fa;
+    border-left: 4px solid #4a6fa5;
+    padding: 15px;
+    margin-bottom: 25px;
+    border-radius: 0 4px 4px 0;
+}
+
+.info-panel h2 {
+    font-size: 1.2rem;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.info-panel p {
+    color: #555;
+    margin-bottom: 8px;
+}
+
+.backup-section, 
+.restore-section {
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.backup-section h2,
+.restore-section h2,
+.backups-list h3,
+.manual-restore h3 {
+    font-size: 1.2rem;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.table th,
+.table td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.table th {
+    font-weight: 600;
+    color: #333;
+    background-color: #f8f9fa;
+}
+
+.inline-form {
+    display: inline;
+}
+
+.btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    display: inline-block;
+    text-decoration: none;
+    text-align: center;
+}
+
+.btn-sm {
+    padding: 5px 10px;
+    font-size: 12px;
+}
+
+.btn-primary {
+    background-color: #4a6fa5;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #3a5982;
+}
+
+.btn-secondary {
+    background-color: #e0e0e0;
+    color: #333;
+}
+
+.btn-secondary:hover {
+    background-color: #d0d0d0;
+}
+
+.btn-warning {
+    background-color: #f39c12;
+    color: white;
+}
+
+.btn-warning:hover {
+    background-color: #e67e22;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+    color: #555;
+}
+
+.form-group input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.actions {
+    margin-top: 20px;
+}
+
+/* Responsive Anpassungen */
+@media (max-width: 768px) {
+    .backup-container {
+        padding: 15px;
+        margin: 10px;
+    }
+    
+    .table th, 
+    .table td {
+        padding: 8px;
+    }
+    
+    .table {
+        font-size: 14px;
+    }
+}
+
+/* Dark Mode Support */
+.dark-mode .backup-container {
+    background-color: #2a2a2a;
+    color: #e0e0e0;
+}
+
+.dark-mode .info-panel {
+    background-color: #333;
+    border-left-color: #5d84c0;
+}
+
+.dark-mode .info-panel h2,
+.dark-mode .backup-section h2,
+.dark-mode .restore-section h2,
+.dark-mode .backups-list h3,
+.dark-mode .manual-restore h3 {
+    color: #ccc;
+}
+
+.dark-mode .info-panel p {
+    color: #bbb;
+}
+
+.dark-mode .backup-section, 
+.dark-mode .restore-section {
+    border-color: #444;
+}
+
+.dark-mode .table th,
+.dark-mode .table td {
+    border-color: #444;
+}
+
+.dark-mode .table th {
+    background-color: #333;
+    color: #ccc;
+}
+
+.dark-mode .form-group label {
+    color: #ccc;
+}
+
+.dark-mode .form-group input[type="text"] {
+    background-color: #333;
+    border-color: #555;
+    color: #e0e0e0;
+}
+
+.dark-mode .btn-secondary {
+    background-color: #444;
+    color: #e0e0e0;
+}
+
+.dark-mode .btn-secondary:hover {
+    background-color: #555;
+}

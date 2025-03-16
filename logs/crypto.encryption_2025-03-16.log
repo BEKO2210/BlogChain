@@ -1,0 +1,21 @@
+2025-03-16 03:42:19 - crypto.encryption - INFO - Key derived from password with 100000 iterations
+2025-03-16 03:42:19 - crypto.encryption - INFO - New encryption key pair generated
+2025-03-16 03:42:19 - crypto.encryption - INFO - New signing key pair generated
+2025-03-16 03:43:14 - crypto.encryption - INFO - Key derived from password with 100000 iterations
+2025-03-16 03:43:14 - crypto.encryption - ERROR - Decryption failed: 'utf-8' codec can't decode byte 0xfd in position 3: invalid start byte
+2025-03-16 03:48:59 - crypto.encryption - INFO - Key derived from password with 100000 iterations
+2025-03-16 03:48:59 - crypto.encryption - ERROR - Decryption failed: 'utf-8' codec can't decode byte 0xfd in position 3: invalid start byte
+2025-03-16 03:51:30 - crypto.encryption - INFO - Key derived from password with 100000 iterations
+2025-03-16 03:51:30 - crypto.encryption - ERROR - Decryption failed: 'utf-8' codec can't decode byte 0xfd in position 3: invalid start byte
+2025-03-16 03:52:03 - crypto.encryption - INFO - Key derived from password with 100000 iterations
+2025-03-16 03:52:03 - crypto.encryption - ERROR - Decryption failed: 'utf-8' codec can't decode byte 0xfd in position 3: invalid start byte
+2025-03-16 03:58:25 - crypto.encryption - INFO - Key derived from password with 100000 iterations
+2025-03-16 03:58:25 - crypto.encryption - ERROR - Decryption failed: 'utf-8' codec can't decode byte 0xfd in position 3: invalid start byte
+2025-03-16 04:11:54 - crypto.encryption - WARNING - Encryption key is None, using a default secure key
+2025-03-16 04:12:18 - crypto.encryption - WARNING - Encryption key is None, using a default secure key
+2025-03-16 04:12:19 - crypto.encryption - WARNING - Decryption key is None, using a default secure key
+2025-03-16 04:12:34 - crypto.encryption - WARNING - Decryption key is None, using a default secure key
+2025-03-16 04:12:51 - crypto.encryption - WARNING - Decryption key is None, using a default secure key
+2025-03-16 04:13:16 - crypto.encryption - WARNING - Decryption key is None, using a default secure key
+2025-03-16 04:13:19 - crypto.encryption - WARNING - Decryption key is None, using a default secure key
+2025-03-16 04:13:22 - crypto.encryption - WARNING - Decryption key is None, using a default secure key

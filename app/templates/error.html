@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block title %}Fehler{% endblock %}
+
+{% block content %}
+<div class="error-container">
+    <div class="error-box">
+        <div class="error-icon">
+            <i class="fas fa-exclamation-triangle"></i>
+        </div>
+        <h1>{{ error.code if error.code else 'Fehler' }}</h1>
+        <p class="error-message">{{ message }}</p>
+        <p class="error-details">{{ error }}</p>
+        <a href="/" class="btn btn-primary">Zurück zur Startseite</a>
+    </div>
+</div>
+{% endblock %}
+
+{% block styles %}
+<style>
+    .error-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 80vh;
+    }
+    
+    .error-box {
+        background-color: var(--bg-secondary);
+        border-radius: 8px;
+        padding: 2rem;
+        max-width: 600px;
+        text-align: center;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    
+    .error-icon {
+        font-size: 4rem;
+        color: var(--color-danger);
+        margin-bottom: 1rem;
+    }
+    
+    .error-message {
+        font-size: 1.2rem;
+        margin-bottom: 1rem;
+    }
+    
+    .error-details {
+        color: var(--text-secondary);
+        font-family: monospace;
+        background-color: var(--bg-tertiary);
+        padding: 1rem;
+        border-radius: 4px;
+        text-align: left;
+        margin-bottom: 1.5rem;
+    }
+</style>
+{% endblock %}

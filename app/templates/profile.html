@@ -1,0 +1,485 @@
+{% extends "base.html" %}
+
+{% block title %}Mein Profil - BlockJournal{% endblock %}
+
+{% block content %}
+<div class="profile-container">
+    <div class="profile-header-section">
+        <div class="profile-cover">
+            {% if user.profile.cover_image %}
+            <img src="{{ user.profile.cover_image }}" alt="Titelbild">
+            {% else %}
+            <div class="default-cover">
+                <div class="blockchain-pattern"></div>
+            </div>
+            {% endif %}
+            <div class="profile-avatar-large">
+                {% if user.profile.avatar %}
+                <img src="{{ user.profile.avatar }}" alt="{{ user.username }}">
+                {% else %}
+                <div class="default-avatar large">
+                    <i class="fas fa-user"></i>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        
+        <div class="profile-details">
+            <div class="profile-name">
+                <h1>{{ user.profile.display_name or user.username }}</h1>
+                <div class="verification-badge" title="Verifizierter Account">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+            </div>
+            <div class="profile-meta">
+                <span class="user-id">ID: {{ user.user_id[:8] }}...</span>
+                <span class="join-date">Beigetreten: {{ user.created_at|timestamp_to_date }}</span>
+            </div>
+            <div class="profile-bio">
+                <p>{{ user.profile.bio or 'Keine Biografieinformationen vorhanden.' }}</p>
+            </div>
+            <div class="profile-stats">
+                <div class="stat">
+                    <span class="stat-value">{{ posts|length }}</span>
+                    <span class="stat-label">Beiträge</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-value">{{ user.stats.blocks or 0 }}</span>
+                    <span class="stat-label">Blöcke</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-value">{{ user.stats.total_reactions or 0 }}</span>
+                    <span class="stat-label">Reaktionen</span>
+                </div>
+            </div>
+            <div class="profile-actions">
+                <a href="{{ url_for('edit_profile') }}" class="btn btn-primary">
+                    <i class="fas fa-edit"></i> Profil bearbeiten
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="profile-content">
+        <div class="profile-tabs">
+            <div class="tab-headers">
+                <button class="tab-btn active" data-tab="posts">
+                    <i class="fas fa-file-alt"></i> Beiträge
+                </button>
+                <button class="tab-btn" data-tab="keys">
+                    <i class="fas fa-key"></i> Schlüssel
+                </button>
+                <button class="tab-btn" data-tab="activity">
+                    <i class="fas fa-chart-line"></i> Aktivität
+                </button>
+                <button class="tab-btn" data-tab="blockchain">
+                    <i class="fas fa-cube"></i> Blockchain
+                </button>
+            </div>
+            
+            <div class="tab-content">
+                <!-- Posts Tab -->
+                <div class="tab-pane active" id="posts-tab">
+                    {% if posts %}
+                    <div class="posts-grid">
+                        {% for post in posts %}
+                        <div class="post-card" data-post-id="{{ post.post_id }}">
+                            <div class="post-header">
+                                <div class="post-author">
+                                    <div class="author-avatar">
+                                        <div class="default-avatar small">
+                                            <i class="fas fa-user"></i>
+                                        </div>
+                                    </div>
+                                    <div class="author-info">
+                                        <h4 class="author-name">{{ user.profile.display_name or user.username }}</h4>
+                                        <span class="post-time">{{ post.created_at|timestamp_to_date }}</span>
+                                    </div>
+                                </div>
+                                <div class="post-security">
+                                    <span class="verified-badge" title="Signatur verifiziert">
+                                        <i class="fas fa-check-circle"></i>
+                                    </span>
+                                    <span class="encrypted-badge" title="Ende-zu-Ende-verschlüsselt">
+                                        <i class="fas fa-lock"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            
+                            <div class="post-content">
+                                <p>{{ post.content }}</p>
+                            </div>
+                            
+                            {% if post.tags %}
+                            <div class="post-tags">
+                                {% for tag in post.tags %}
+                                <span class="tag">#{{ tag }}</span>
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                            
+                            <div class="post-actions">
+                                <div class="action-buttons">
+                                    <button class="btn-icon reaction-btn" data-reaction="like">
+                                        <i class="far fa-thumbs-up"></i>
+                                        <span class="count">{{ post.reactions.likes|default(0) }}</span>
+                                    </button>
+                                    <button class="btn-icon reaction-btn" data-reaction="love">
+                                        <i class="far fa-heart"></i>
+                                        <span class="count">{{ post.reactions.loves|default(0) }}</span>
+                                    </button>
+                                    <button class="btn-icon comment-btn">
+                                        <i class="far fa-comment"></i>
+                                        <span class="count">{{ post.comments|length|default(0) }}</span>
+                                    </button>
+                                </div>
+                                <div class="blockchain-info">
+                                    <span class="block-number" title="Block-Nummer">
+                                        <i class="fas fa-cube"></i> #{{ post.metadata.block_index|default('?') }}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <div class="empty-state">
+                        <div class="empty-icon">
+                            <i class="fas fa-file-alt"></i>
+                        </div>
+                        <h3>Keine Beiträge vorhanden</h3>
+                        <p>Du hast noch keine Beiträge erstellt. Erstelle deinen ersten Beitrag, um deine persönliche Blockchain zu starten!</p>
+                        <a href="{{ url_for('create_post') }}" class="btn btn-primary">
+                            <i class="fas fa-pen"></i> Erster Beitrag
+                        </a>
+                    </div>
+                    {% endif %}
+                </div>
+                
+                <!-- Keys Tab -->
+                <div class="tab-pane" id="keys-tab">
+                    <div class="keys-container">
+                        <div class="key-info-card">
+                            <h3><i class="fas fa-key"></i> Deine kryptographischen Schlüssel</h3>
+                            <p class="key-description">
+                                Diese Schlüssel werden für die Verschlüsselung und Signierung deiner Daten verwendet.
+                                Sie sind mit deinem Passwort geschützt und werden nur lokal auf deinem Gerät gespeichert.
+                            </p>
+                            
+                            <div class="key-items">
+                                <div class="key-item">
+                                    <div class="key-label">Öffentlicher Schlüssel</div>
+                                    <div class="key-value">
+                                        <div class="key-display">{{ user.public_key[:15] }}...{{ user.public_key[-15:] }}</div>
+                                        <button class="btn-icon copy-btn" data-clipboard-text="{{ user.public_key }}" title="Kopieren">
+                                            <i class="fas fa-copy"></i>
+                                        </button>
+                                    </div>
+                                    <div class="key-info">
+                                        <i class="fas fa-info-circle"></i>
+                                        <span>Dein öffentlicher Schlüssel wird verwendet, um die Authentizität deiner Beiträge zu verifizieren.</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="key-item">
+                                    <div class="key-label">Privater Schlüssel</div>
+                                    <div class="key-value">
+                                        <div class="key-display secure">••••••••••••••••••••••••••••••••••••••••</div>
+                                        <button class="btn-icon show-key-btn" title="Anzeigen">
+                                            <i class="fas fa-eye"></i>
+                                            <span class="sr-only">Privaten Schlüssel anzeigen</span>
+                                        </button>
+                                    </div>
+                                    <div class="key-info warning">
+                                        <i class="fas fa-exclamation-triangle"></i>
+                                        <span>Dein privater Schlüssel sollte immer sicher aufbewahrt werden. Teile ihn niemals mit anderen.</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="key-actions">
+                                <button class="btn btn-secondary export-keys-btn">
+                                    <i class="fas fa-download"></i> Schlüssel exportieren
+                                </button>
+                                <button class="btn btn-primary regenerate-keys-btn">
+                                    <i class="fas fa-sync-alt"></i> Schlüssel neu generieren
+                                </button>
+                            </div>
+                            
+                            <div class="key-security-notice">
+                                <i class="fas fa-shield-alt"></i>
+                                <p>
+                                    Wenn du deine Schlüssel neu generierst, werden alle deine verschlüsselten Daten mit den neuen Schlüsseln 
+                                    neu verschlüsselt. Dies kann je nach Datenmenge einige Zeit dauern.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Activity Tab -->
+                <div class="tab-pane" id="activity-tab">
+                    <div class="activity-timeline">
+                        <h3>Aktivitätsverlauf</h3>
+                        
+                        {% if activities %}
+                        <div class="timeline">
+                            {% for activity in activities %}
+                            <div class="timeline-item">
+                                <div class="timeline-icon">
+                                    {% if activity.type == 'post' %}
+                                    <i class="fas fa-file-alt"></i>
+                                    {% elif activity.type == 'comment' %}
+                                    <i class="fas fa-comment"></i>
+                                    {% elif activity.type == 'reaction' %}
+                                    <i class="fas fa-thumbs-up"></i>
+                                    {% elif activity.type == 'mining' %}
+                                    <i class="fas fa-hammer"></i>
+                                    {% else %}
+                                    <i class="fas fa-circle"></i>
+                                    {% endif %}
+                                </div>
+                                <div class="timeline-content">
+                                    <h4>{{ activity.title }}</h4>
+                                    <p>{{ activity.description }}</p>
+                                    <span class="timeline-date">{{ activity.timestamp|timestamp_to_date }}</span>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                        <div class="empty-state small">
+                            <div class="empty-icon">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <h3>Keine Aktivitäten</h3>
+                            <p>Es sind noch keine Aktivitäten aufgezeichnet worden.</p>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <!-- Blockchain Tab -->
+                <div class="tab-pane" id="blockchain-tab">
+                    <div class="blockchain-visualization-container">
+                        <h3>Deine persönliche Blockchain</h3>
+                        
+                        {% if blocks and blocks|length > 0 %}
+                        <div class="blockchain-stats">
+                            <div class="stat-card">
+                                <div class="stat-icon">
+                                    <i class="fas fa-cubes"></i>
+                                </div>
+                                <div class="stat-details">
+                                    <span class="stat-value">{{ blocks|length }}</span>
+                                    <span class="stat-label">Blöcke</span>
+                                </div>
+                            </div>
+                            
+                            <div class="stat-card">
+                                <div class="stat-icon">
+                                    <i class="fas fa-hammer"></i>
+                                </div>
+                                <div class="stat-details">
+                                    <span class="stat-value">{{ user.settings.mining_difficulty }}</span>
+                                    <span class="stat-label">Mining-Schwierigkeit</span>
+                                </div>
+                            </div>
+                            
+                            <div class="stat-card">
+                                <div class="stat-icon">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                                <div class="stat-details">
+                                    <span class="stat-value">{{ last_block.timestamp|timestamp_to_date }}</span>
+                                    <span class="stat-label">Letzter Block</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="blockchain-viewer">
+                            <div class="blocks-container">
+                                {% for block in blocks %}
+                                <div class="blockchain-block" data-block-index="{{ block.index }}">
+                                    <div class="block-header">
+                                        <span class="block-index">#{{ block.index }}</span>
+                                        <span class="block-timestamp">{{ block.timestamp|timestamp_to_date }}</span>
+                                    </div>
+                                    <div class="block-content">
+                                        <div class="block-data">
+                                            <div class="data-item">
+                                                <span class="data-label">Hash:</span>
+                                                <span class="data-value hash">{{ block.hash[:10] }}...{{ block.hash[-10:] }}</span>
+                                            </div>
+                                            <div class="data-item">
+                                                <span class="data-label">Vorheriger Hash:</span>
+                                                <span class="data-value prev-hash">{{ block.previous_hash[:10] }}...{{ block.previous_hash[-10:] }}</span>
+                                            </div>
+                                            <div class="data-item">
+                                                <span class="data-label">Nonce:</span>
+                                                <span class="data-value">{{ block.nonce }}</span>
+                                            </div>
+                                        </div>
+                                        <div class="block-entries">
+                                            <span class="entries-count">{{ block.data|length }} Einträge</span>
+                                            <button class="btn-icon expand-block-btn">
+                                                <i class="fas fa-chevron-down"></i>
+                                                <span class="sr-only">Blockdetails anzeigen</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="block-expanded hidden">
+                                        <div class="block-entries-list">
+                                            {% for entry in block.data %}
+                                            <div class="block-entry">
+                                                <div class="entry-type">
+                                                    {% if entry.type == 'post' %}
+                                                    <i class="fas fa-file-alt"></i> Beitrag
+                                                    {% elif entry.type == 'comment' %}
+                                                    <i class="fas fa-comment"></i> Kommentar
+                                                    {% elif entry.type == 'reaction' %}
+                                                    <i class="fas fa-thumbs-up"></i> Reaktion
+                                                    {% else %}
+                                                    <i class="fas fa-cube"></i> Dateneintrag
+                                                    {% endif %}
+                                                </div>
+                                                <div class="entry-id">ID: {{ entry.id[:8] }}...</div>
+                                                <div class="entry-timestamp">{{ entry.timestamp|timestamp_to_date }}</div>
+                                            </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        {% else %}
+                        <div class="empty-state">
+                            <div class="empty-icon">
+                                <i class="fas fa-cubes"></i>
+                            </div>
+                            <h3>Blockchain nicht initialisiert</h3>
+                            <p>Deine persönliche Blockchain wird initialisiert, sobald du deinen ersten Beitrag erstellst.</p>
+                            <a href="{{ url_for('create_post') }}" class="btn btn-primary">
+                                <i class="fas fa-pen"></i> Erster Beitrag
+                            </a>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Tab switching functionality
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabPanes = document.querySelectorAll('.tab-pane');
+        
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                // Remove active class from all buttons and panes
+                tabBtns.forEach(b => b.classList.remove('active'));
+                tabPanes.forEach(p => p.classList.remove('active'));
+                
+                // Add active class to clicked button
+                this.classList.add('active');
+                
+                // Show corresponding tab pane
+                const tabId = this.dataset.tab + '-tab';
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+        
+        // Expand/collapse blockchain blocks
+        const expandBtns = document.querySelectorAll('.expand-block-btn');
+        expandBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const block = this.closest('.blockchain-block');
+                const expandedSection = block.querySelector('.block-expanded');
+                const icon = this.querySelector('i');
+                
+                expandedSection.classList.toggle('hidden');
+                
+                if (expandedSection.classList.contains('hidden')) {
+                    icon.classList.replace('fa-chevron-up', 'fa-chevron-down');
+                } else {
+                    icon.classList.replace('fa-chevron-down', 'fa-chevron-up');
+                }
+            });
+        });
+        
+        // Copy key functionality
+        const copyBtns = document.querySelectorAll('.copy-btn');
+        copyBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const text = this.dataset.clipboardText;
+                navigator.clipboard.writeText(text).then(() => {
+                    // Show success tooltip
+                    const originalTitle = this.getAttribute('title');
+                    this.setAttribute('title', 'Kopiert!');
+                    
+                    setTimeout(() => {
+                        this.setAttribute('title', originalTitle);
+                    }, 2000);
+                });
+            });
+        });
+        
+        // Show/hide private key
+        const showKeyBtn = document.querySelector('.show-key-btn');
+        if (showKeyBtn) {
+            showKeyBtn.addEventListener('click', function() {
+                const keyDisplay = this.parentElement.querySelector('.key-display');
+                const icon = this.querySelector('i');
+                
+                if (keyDisplay.classList.contains('secure')) {
+                    // Show the key (in real implementation, this would fetch the decrypted key)
+                    keyDisplay.textContent = "{{user.private_key_preview or 'Privater Schlüssel nicht verfügbar'}}";
+                    keyDisplay.classList.remove('secure');
+                    icon.classList.replace('fa-eye', 'fa-eye-slash');
+                    this.setAttribute('title', 'Verbergen');
+                    
+                    // Auto-hide after 10 seconds
+                    setTimeout(() => {
+                        keyDisplay.textContent = '••••••••••••••••••••••••••••••••••••••••';
+                        keyDisplay.classList.add('secure');
+                        icon.classList.replace('fa-eye-slash', 'fa-eye');
+                        this.setAttribute('title', 'Anzeigen');
+                    }, 10000);
+                } else {
+                    // Hide the key
+                    keyDisplay.textContent = '••••••••••••••••••••••••••••••••••••••••';
+                    keyDisplay.classList.add('secure');
+                    icon.classList.replace('fa-eye-slash', 'fa-eye');
+                    this.setAttribute('title', 'Anzeigen');
+                }
+            });
+        }
+        
+        // Export keys functionality
+        const exportKeysBtn = document.querySelector('.export-keys-btn');
+        if (exportKeysBtn) {
+            exportKeysBtn.addEventListener('click', function() {
+                // In a real implementation, this would trigger a secure export process
+                alert('Diese Funktion würde einen sicheren Export-Prozess starten, der die Schlüssel verschlüsselt und in einer Datei speichert.');
+            });
+        }
+        
+        // Regenerate keys functionality
+        const regenerateKeysBtn = document.querySelector('.regenerate-keys-btn');
+        if (regenerateKeysBtn) {
+            regenerateKeysBtn.addEventListener('click', function() {
+                if (confirm('Bist du sicher, dass du neue Schlüssel generieren möchtest? Alle deine Daten werden mit den neuen Schlüsseln neu verschlüsselt.')) {
+                    // In a real implementation, this would trigger a key regeneration process
+                    alert('Diese Funktion würde den Prozess zur Neugenerierung der Schlüssel starten und alle Daten neu verschlüsseln.');
+                }
+            });
+        }
+    });
+</script>
+{% endblock %}

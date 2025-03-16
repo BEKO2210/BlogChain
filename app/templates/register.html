@@ -1,0 +1,178 @@
+{% extends "base.html" %}
+
+{% block title %}Registrieren - BlockJournal{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="auth-card">
+        <div class="auth-header">
+            <h2><i class="fas fa-user-plus"></i> Registrieren</h2>
+            <p>Erstelle deinen sicheren dezentralen Account</p>
+        </div>
+        
+        <form class="auth-form" method="POST" action="{{ url_for('register') }}">
+            <div class="form-group">
+                <label for="username"><i class="fas fa-user"></i> Benutzername</label>
+                <input type="text" id="username" name="username" required>
+                <small>Dieser Name wird öffentlich sichtbar sein</small>
+            </div>
+            
+            <div class="form-group">
+                <label for="password"><i class="fas fa-lock"></i> Passwort</label>
+                <input type="password" id="password" name="password" required>
+                <div class="password-strength-meter">
+                    <div class="strength-bar">
+                        <span class="bar-segment" data-strength="1"></span>
+                        <span class="bar-segment" data-strength="2"></span>
+                        <span class="bar-segment" data-strength="3"></span>
+                        <span class="bar-segment" data-strength="4"></span>
+                    </div>
+                    <small class="strength-text">Passwortstärke: <span id="strength-value">Schwach</span></small>
+                </div>
+                <small class="password-info">
+                    <i class="fas fa-info-circle"></i> Dein Passwort wird zur Ableitung deiner kryptografischen Schlüssel verwendet und kann <strong>nicht wiederhergestellt</strong> werden.
+                </small>
+            </div>
+            
+            <div class="form-group">
+                <label for="confirm_password"><i class="fas fa-lock"></i> Passwort bestätigen</label>
+                <input type="password" id="confirm_password" name="confirm_password" required>
+                <small id="password-match" class="hidden">Passwörter stimmen überein</small>
+            </div>
+            
+            <div class="security-notice">
+                <i class="fas fa-shield-alt"></i>
+                <div>
+                    <h4>Wichtiger Sicherheitshinweis</h4>
+                    <p>Nach der Registrierung werden sofort kryptographische Schlüssel für dich generiert und lokal gespeichert. 
+                    Diese Schlüssel sind <strong>nur mit deinem Passwort</strong> zugänglich. Es gibt <strong>keine Möglichkeit</strong>, 
+                    auf deine Daten zuzugreifen, wenn du dein Passwort vergisst.</p>
+                </div>
+            </div>
+            
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary btn-block" id="register-btn" disabled>
+                    <i class="fas fa-user-plus"></i> Account erstellen
+                </button>
+            </div>
+        </form>
+        
+        <div class="auth-separator">
+            <span>Bereits registriert?</span>
+        </div>
+        
+        <div class="auth-footer">
+            <a href="{{ url_for('login') }}" class="btn btn-secondary btn-block">
+                <i class="fas fa-sign-in-alt"></i> Anmelden
+            </a>
+        </div>
+    </div>
+    
+    <div class="auth-info">
+        <div class="blockchain-keys">
+            <h3><i class="fas fa-key"></i> Nach der Registrierung</h3>
+            <div class="key-generation-steps">
+                <div class="step">
+                    <div class="step-icon"><i class="fas fa-lock-open"></i></div>
+                    <div class="step-info">
+                        <h4>1. Schlüsselgenerierung</h4>
+                        <p>BlockJournal generiert deine persönlichen kryptographischen Schlüssel</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-icon"><i class="fas fa-cube"></i></div>
+                    <div class="step-info">
+                        <h4>2. Blockchain-Initialisierung</h4>
+                        <p>Eine persönliche Blockchain wird für deine Inhalte erstellt</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-icon"><i class="fas fa-shield-alt"></i></div>
+                    <div class="step-info">
+                        <h4>3. Sichere Speicherung</h4>
+                        <p>Deine Schlüssel werden sicher auf deinem Gerät gespeichert</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const passwordInput = document.getElementById('password');
+        const confirmInput = document.getElementById('confirm_password');
+        const strengthValue = document.getElementById('strength-value');
+        const registerBtn = document.getElementById('register-btn');
+        const passwordMatch = document.getElementById('password-match');
+        const strengthBars = document.querySelectorAll('.bar-segment');
+        
+        // Function to check password strength
+        function checkPasswordStrength(password) {
+            let strength = 0;
+            
+            if (password.length >= 8) strength++;
+            if (password.length >= 12) strength++;
+            if (/[A-Z]/.test(password) && /[a-z]/.test(password)) strength++;
+            if (/[0-9]/.test(password)) strength++;
+            if (/[^A-Za-z0-9]/.test(password)) strength++;
+            
+            return Math.min(strength, 4); // Max strength is 4
+        }
+        
+        // Function to update UI based on password strength
+        function updateStrengthUI(strength) {
+            let strengthText = 'Schwach';
+            
+            if (strength >= 4) strengthText = 'Sehr stark';
+            else if (strength === 3) strengthText = 'Stark';
+            else if (strength === 2) strengthText = 'Mittel';
+            
+            strengthValue.textContent = strengthText;
+            
+            // Update strength bars
+            strengthBars.forEach((bar, index) => {
+                if (index < strength) {
+                    bar.classList.add('active');
+                } else {
+                    bar.classList.remove('active');
+                }
+            });
+        }
+        
+        // Function to validate form
+        function validateForm() {
+            const password = passwordInput.value;
+            const confirmPassword = confirmInput.value;
+            const strength = checkPasswordStrength(password);
+            const passwordsMatch = password === confirmPassword && password !== '';
+            
+            if (passwordsMatch) {
+                passwordMatch.classList.remove('hidden');
+                passwordMatch.classList.add('match');
+                passwordMatch.textContent = 'Passwörter stimmen überein';
+            } else if (confirmPassword !== '') {
+                passwordMatch.classList.remove('hidden', 'match');
+                passwordMatch.classList.add('no-match');
+                passwordMatch.textContent = 'Passwörter stimmen nicht überein';
+            } else {
+                passwordMatch.classList.add('hidden');
+            }
+            
+            // Enable register button only if passwords match and strength is at least 2
+            registerBtn.disabled = !(passwordsMatch && strength >= 2);
+        }
+        
+        // Add event listeners
+        passwordInput.addEventListener('input', function() {
+            const strength = checkPasswordStrength(this.value);
+            updateStrengthUI(strength);
+            validateForm();
+        });
+        
+        confirmInput.addEventListener('input', validateForm);
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}BlockJournal{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    {% block extra_css %}{% endblock %}
+    <script>
+        // Check if user prefers dark mode
+        function detectColorScheme() {
+            const theme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', theme);
+        }
+        
+        // Call on page load
+        detectColorScheme();
+    </script>
+</head>
+<body>
+    <div class="container">
+        <header class="main-header">
+            <div class="logo">
+                <h1><i class="fas fa-link"></i> BlockJournal</h1>
+            </div>
+            <nav class="main-nav">
+                {% if user %}
+                <ul>
+                    <li><a href="{{ url_for('feed') }}"><i class="fas fa-home"></i> Feed</a></li>
+                    <li><a href="{{ url_for('profile') }}"><i class="fas fa-user"></i> Profil</a></li>
+                    <li><a href="{{ url_for('blockchain_info') }}"><i class="fas fa-cube"></i> Blockchain</a></li>
+                    <li><a href="{{ url_for('settings') }}"><i class="fas fa-cog"></i> Einstellungen</a></li>
+                    <li><a href="{{ url_for('backup') }}"><i class="fas fa-save"></i> Backup</a></li>
+                    <li><a href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                </ul>
+                {% else %}
+                <ul>
+                    <li><a href="{{ url_for('index') }}"><i class="fas fa-home"></i> Start</a></li>
+                    <li><a href="{{ url_for('login') }}"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+                    <li><a href="{{ url_for('register') }}"><i class="fas fa-user-plus"></i> Registrieren</a></li>
+                </ul>
+                {% endif %}
+            </nav>
+        </header>
+
+        <div class="flash-messages">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">
+                            {{ message }}
+                            <span class="close-btn" onclick="this.parentElement.style.display='none';">&times;</span>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
+
+        <main class="content">
+            {% block content %}{% endblock %}
+        </main>
+
+        <footer class="main-footer">
+            <div class="footer-content">
+                <p>&copy; 2025 BlockJournal - Dezentrale Blockchain-basierte Social-Media-Plattform</p>
+                <p><i class="fas fa-shield-alt"></i> Militärische Verschlüsselungsstandards | <i class="fas fa-lock"></i> Vollständig dezentral | <i class="fas fa-user-shield"></i> Maximale Privatsphäre</p>
+            </div>
+            <div class="blockchain-status">
+                {% if user %}
+                <span class="status-indicator">
+                    <i class="fas fa-cube"></i> Blockchain aktiv
+                </span>
+                <span class="mining-difficulty">
+                    <i class="fas fa-hammer"></i> Mining-Schwierigkeit: {{ user.settings.mining_difficulty }}
+                </span>
+                {% endif %}
+            </div>
+        </footer>
+    </div>
+
+    <!-- Base JavaScript -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

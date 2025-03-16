@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block title %}Neuen Beitrag erstellen - BlockJournal{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="create-post-container">
+        <h1 class="page-title">Neuen Beitrag erstellen</h1>
+        
+        <div class="flash-messages">
+            {% for category, message in get_flashed_messages(with_categories=true) %}
+                <div class="alert alert-{{ category }}">{{ message }}</div>
+            {% endfor %}
+        </div>
+        
+        <form method="POST" action="{{ url_for('create_post') }}" class="create-post-form" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="content">Beitragsinhalt:</label>
+                <textarea id="content" name="content" rows="6" required
+                          placeholder="Was möchten Sie teilen?"></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="post_type">Beitragstyp:</label>
+                <select id="post_type" name="post_type">
+                    <option value="post">Normaler Beitrag</option>
+                    <option value="announcement">Ankündigung</option>
+                    <option value="question">Frage</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="attachment">Anhang (optional):</label>
+                <input type="file" id="attachment" name="attachment">
+                <span class="form-hint">Unterstützte Formate: JPG, PNG, GIF (max. 10MB)</span>
+            </div>
+            
+            <div class="form-group">
+                <label for="tags">Tags (optional):</label>
+                <input type="text" id="tags" name="tags" placeholder="Tag1, Tag2, Tag3">
+                <span class="form-hint">Durch Kommas getrennte Tags</span>
+            </div>
+            
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Beitrag veröffentlichen</button>
+                <a href="{{ url_for('feed') }}" class="btn btn-secondary">Abbrechen</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Character counter for post content
+        const contentField = document.getElementById('content');
+        const maxLength = 5000; // Maximum character limit
+        
+        contentField.addEventListener('input', function() {
+            const remainingChars = maxLength - this.value.length;
+            let counterElement = document.getElementById('char-counter');
+            
+            if (!counterElement) {
+                counterElement = document.createElement('span');
+                counterElement.id = 'char-counter';
+                counterElement.className = 'char-counter';
+                this.insertAdjacentElement('afterend', counterElement);
+            }
+            
+            counterElement.textContent = `${this.value.length}/${maxLength} Zeichen`;
+            
+            if (remainingChars < 0) {
+                counterElement.classList.add('error');
+                this.value = this.value.substring(0, maxLength);
+                counterElement.textContent = `${maxLength}/${maxLength} Zeichen (Limit erreicht)`;
+            } else {
+                counterElement.classList.remove('error');
+            }
+        });
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,120 @@
+{% extends "base.html" %}
+
+{% block title %}BlockJournal - Dezentrale Social Media Plattform{% endblock %}
+
+{% block content %}
+<div class="landing-page">
+    <section class="hero">
+        <div class="hero-content">
+            <h1>BlockJournal</h1>
+            <h2>Dezentrale Blockchain-basierte Social-Media-Plattform</h2>
+            <p class="tagline">Sicherheit trifft auf Benutzerfreundlichkeit</p>
+            <div class="cta-buttons">
+                <a href="{{ url_for('register') }}" class="btn btn-primary">Jetzt starten</a>
+                <a href="#features" class="btn btn-secondary">Mehr erfahren</a>
+            </div>
+        </div>
+        <div class="hero-image">
+            <div class="blockchain-animation">
+                <div class="block block-1"><i class="fas fa-lock"></i></div>
+                <div class="block block-2"><i class="fas fa-user-shield"></i></div>
+                <div class="block block-3"><i class="fas fa-shield-alt"></i></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="features" class="features">
+        <h2>Kernfunktionalitäten</h2>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <i class="fas fa-cubes feature-icon"></i>
+                <h3>Dezentrale Architektur</h3>
+                <p>Vollständig dezentrale Lösung ohne zentrale Server. Deine Daten bleiben auf deinem Gerät und nur du hast Zugriff darauf.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-lock feature-icon"></i>
+                <h3>Militärische Verschlüsselung</h3>
+                <p>Ende-zu-Ende-Verschlüsselung für alle Inhalte mit modernsten kryptographischen Verfahren für maximale Sicherheit.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-stream feature-icon"></i>
+                <h3>Intuitive Benutzeroberfläche</h3>
+                <p>Feed-basierte Benutzeroberfläche mit Profilbildern, Tagging-System und Unterstützung für Bilder und andere Medien.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-sliders-h feature-icon"></i>
+                <h3>Anpassbare Sicherheit</h3>
+                <p>Individualisierbare Sicherheitsstufen durch einstellbare Mining-Schwierigkeit und automatischen Logout bei Inaktivität.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-clipboard-list feature-icon"></i>
+                <h3>Umfassendes Logging</h3>
+                <p>Detailliertes Logging-System für alle Systemereignisse mit verschlüsselten Log-Dateien und verschiedenen Detailstufen.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-sync-alt feature-icon"></i>
+                <h3>Offline-Funktionalität</h3>
+                <p>Die Anwendung funktioniert vollständig offline, sämtliche Daten bleiben auf deinem Gerät und sind maximal geschützt.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="security">
+        <h2>Maximale Sicherheit und Privatsphäre</h2>
+        <div class="security-commitment">
+            <div class="commitment-list">
+                <div class="commitment-item">
+                    <i class="fas fa-times-circle"></i>
+                    <p>Keine Tracking-Funktionen oder Analysetools</p>
+                </div>
+                <div class="commitment-item">
+                    <i class="fas fa-times-circle"></i>
+                    <p>Keine zentralisierten Server oder Cloud-Dienste</p>
+                </div>
+                <div class="commitment-item">
+                    <i class="fas fa-times-circle"></i>
+                    <p>Keine "Hintertüren" oder Passwort-Wiederherstellung</p>
+                </div>
+                <div class="commitment-item">
+                    <i class="fas fa-times-circle"></i>
+                    <p>Keine proprietären geschlossenen Protokolle</p>
+                </div>
+                <div class="commitment-item">
+                    <i class="fas fa-times-circle"></i>
+                    <p>Keine automatischen Updates ohne Zustimmung</p>
+                </div>
+            </div>
+            <div class="blockchain-graphic">
+                <div class="blockchain-visualization">
+                    <div class="chain-link"></div>
+                    <div class="chain-link"></div>
+                    <div class="chain-link"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="get-started">
+        <h2>Bereit für maximale Sicherheit?</h2>
+        <p>Erstelle jetzt deinen Account und erlebe Social Media mit unvergleichlicher Privatsphäre und Sicherheit.</p>
+        <div class="cta-buttons">
+            <a href="{{ url_for('register') }}" class="btn btn-primary">Account erstellen</a>
+            <a href="{{ url_for('login') }}" class="btn btn-secondary">Anmelden</a>
+        </div>
+    </section>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Animate blockchain blocks
+    document.addEventListener('DOMContentLoaded', function() {
+        const blocks = document.querySelectorAll('.block');
+        blocks.forEach((block, index) => {
+            setTimeout(() => {
+                block.classList.add('animate');
+            }, index * 600);
+        });
+    });
+</script>
+{% endblock %}

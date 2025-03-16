@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+
+{% block title %}Blockchain Backup - BlockJournal{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="backup-container">
+        <h1 class="page-title">Blockchain Backup & Wiederherstellung</h1>
+        
+        <div class="flash-messages">
+            {% for category, message in get_flashed_messages(with_categories=true) %}
+                <div class="alert alert-{{ category }}">{{ message }}</div>
+            {% endfor %}
+        </div>
+        
+        <div class="info-panel">
+            <h2>Blockchain-Informationen</h2>
+            <p>Die Blockchain enthält alle Ihre Beiträge, Kommentare und andere Daten in einer sicheren, unveränderlichen Struktur.</p>
+            <p>Regelmäßige Backups stellen sicher, dass Sie Ihre Daten nicht verlieren.</p>
+        </div>
+        
+        <div class="backup-section">
+            <h2>Backup erstellen</h2>
+            <p>Erstellen Sie eine Sicherungskopie Ihrer aktuellen Blockchain.</p>
+            
+            <form method="POST" action="{{ url_for('backup') }}" class="backup-form">
+                <input type="hidden" name="action" value="backup">
+                <button type="submit" class="btn btn-primary">Neues Backup erstellen</button>
+            </form>
+        </div>
+        
+        <div class="restore-section">
+            <h2>Wiederherstellung</h2>
+            <p>Stellen Sie Ihre Blockchain aus einem früheren Backup wieder her.</p>
+            
+            {% if backups %}
+                <div class="backups-list">
+                    <h3>Verfügbare Backups</h3>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Datum</th>
+                                <th>Größe</th>
+                                <th>Aktionen</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for backup in backups %}
+                                <tr>
+                                    <td>{{ backup.timestamp|timestamp_to_date }}</td>
+                                    <td>{{ backup.size }} KB</td>
+                                    <td>
+                                        <form method="POST" action="{{ url_for('backup') }}" class="inline-form">
+                                            <input type="hidden" name="action" value="restore">
+                                            <input type="hidden" name="backup_path" value="{{ backup.path }}">
+                                            <button type="submit" class="btn btn-sm btn-warning">Wiederherstellen</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <p>Keine Backups verfügbar.</p>
+            {% endif %}
+            
+            <div class="manual-restore">
+                <h3>Manuelles Wiederherstellen</h3>
+                <form method="POST" action="{{ url_for('backup') }}" class="restore-form">
+                    <input type="hidden" name="action" value="restore">
+                    <div class="form-group">
+                        <label for="backup_path">Backup-Pfad:</label>
+                        <input type="text" id="backup_path" name="backup_path" placeholder="Vollständiger Pfad zum Backup-Ordner">
+                    </div>
+                    <button type="submit" class="btn btn-warning">Aus Pfad wiederherstellen</button>
+                </form>
+            </div>
+        </div>
+        
+        <div class="actions">
+            <a href="{{ url_for('blockchain_info') }}" class="btn btn-secondary">Zurück zur Blockchain-Info</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Bestätigungsdialog vor dem Wiederherstellen
+        const restoreForms = document.querySelectorAll('form[name="action"][value="restore"]');
+        
+        restoreForms.forEach(form => {
+            form.addEventListener('submit', function(e) {
+                const confirmed = confirm('Sind Sie sicher, dass Sie die Blockchain wiederherstellen möchten? Aktuelle Änderungen gehen verloren.');
+                if (!confirmed) {
+                    e.preventDefault();
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}

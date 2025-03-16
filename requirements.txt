@@ -1,0 +1,24 @@
+# Core dependencies
+Flask==2.3.3             # Web framework
+pycryptodome==3.19.0     # Cryptographic library for encryption
+PyNaCl==1.5.0            # Library for high-level cryptographic operations
+base58==2.1.1            # Base58 encoding/decoding (used in blockchain)
+
+# Frontend dependencies
+Flask-Assets==2.1.0      # Asset management for Flask
+cssmin==0.2.0            # CSS minifier
+jsmin==3.0.1             # JavaScript minifier
+
+# Database
+leveldb==0.201           # Key-value storage for blockchain data
+
+# Utilities
+pyOpenSSL==23.2.0        # SSL/TLS functionality
+python-dotenv==1.0.0     # Environment variable management
+colorlog==6.7.0          # Colored terminal output for logging
+cryptography==41.0.3     # Cryptographic recipes and primitives
+pillow==10.0.0           # Image processing library
+qrcode==7.4.2            # QR code generation for key exchange
+
+# Testing
+pytest==7.4.0            # Testing framework

@@ -1,0 +1,17 @@
+{
+    "username": "Belkis Aslani",
+    "user_id": "c29b87b0-bd35-4090-a693-483406721d9c",
+    "profile": {
+        "display_name": "B-to-the-Kiss",
+        "bio": "Genesis-User"
+    },
+    "created_at": 1742092938,
+    "last_active": 1742092938,
+    "settings": {
+        "mining_difficulty": 5,
+        "session_timeout": 120,
+        "theme": "light",
+        "auto_sync": false,
+        "log_level": "INFO"
+    }
+}

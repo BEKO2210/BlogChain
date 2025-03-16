@@ -1,0 +1,601 @@
+/* ===== PROFILE PAGE STYLES ===== */
+.profile-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Profile Header Section */
+.profile-header-section {
+    background-color: var(--card-background);
+    border-radius: var(--card-border-radius);
+    box-shadow: var(--card-shadow);
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+
+.profile-cover {
+    height: 200px;
+    position: relative;
+    background-color: var(--primary-color);
+}
+
+.profile-cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.default-cover {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #3498db, #2c3e50);
+    position: relative;
+    overflow: hidden;
+}
+
+.blockchain-pattern {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+    background-size: 20px 20px;
+}
+
+.profile-avatar-large {
+    position: absolute;
+    bottom: -50px;
+    left: 30px;
+    width: 100px;
+    height: 100px;
+    border: 4px solid var(--card-background);
+    border-radius: 50%;
+    z-index: 10;
+}
+
+.profile-avatar-large img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.default-avatar.large {
+    width: 100%;
+    height: 100%;
+    font-size: 2.5rem;
+}
+
+.profile-details {
+    padding: 60px 30px 30px;
+}
+
+.profile-name {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.profile-name h1 {
+    font-size: 1.8rem;
+    margin-right: 10px;
+}
+
+.verification-badge {
+    color: var(--primary-color);
+    font-size: 1.2rem;
+}
+
+.profile-meta {
+    display: flex;
+    gap: 15px;
+    font-size: 0.9rem;
+    color: var(--text-light);
+    margin-bottom: 15px;
+}
+
+.profile-bio {
+    margin-bottom: 20px;
+    line-height: 1.6;
+}
+
+.profile-stats {
+    display: flex;
+    gap: 30px;
+    margin-bottom: 20px;
+}
+
+.profile-actions {
+    margin-top: 15px;
+}
+
+/* Profile Content */
+.profile-content {
+    background-color: var(--card-background);
+    border-radius: var(--card-border-radius);
+    box-shadow: var(--card-shadow);
+    overflow: hidden;
+}
+
+/* Profile Tabs */
+.profile-tabs {
+    width: 100%;
+}
+
+.tab-headers {
+    display: flex;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.tab-btn {
+    padding: 15px 20px;
+    background: none;
+    border: none;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--text-light);
+    cursor: pointer;
+    transition: all var(--transition-speed);
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.tab-btn i {
+    margin-right: 8px;
+}
+
+.tab-btn:hover {
+    color: var(--primary-color);
+}
+
+.tab-btn.active {
+    color: var(--primary-color);
+}
+
+.tab-btn.active::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background-color: var(--primary-color);
+}
+
+.tab-content {
+    padding: 30px;
+}
+
+.tab-pane {
+    display: none;
+}
+
+.tab-pane.active {
+    display: block;
+}
+
+/* Posts Tab */
+.posts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+/* Keys Tab */
+.keys-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.key-info-card {
+    background-color: var(--card-background);
+    padding: 25px;
+    border-radius: var(--card-border-radius);
+    border: 1px solid var(--border-color);
+}
+
+.key-info-card h3 {
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    font-size: 1.3rem;
+}
+
+.key-info-card h3 i {
+    margin-right: 10px;
+    color: var(--primary-color);
+}
+
+.key-description {
+    margin-bottom: 20px;
+    color: var(--text-light);
+    line-height: 1.6;
+}
+
+.key-items {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 25px;
+}
+
+.key-item {
+    border: 1px solid var(--border-color);
+    border-radius: var(--button-border-radius);
+    padding: 15px;
+    background-color: rgba(52, 152, 219, 0.05);
+}
+
+.key-label {
+    font-weight: 500;
+    margin-bottom: 10px;
+    color: var(--primary-color);
+}
+
+.key-value {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--card-background);
+    padding: 10px 15px;
+    border-radius: var(--button-border-radius);
+    border: 1px solid var(--border-color);
+    margin-bottom: 10px;
+}
+
+.key-display {
+    font-family: monospace;
+    font-size: 0.9rem;
+    word-break: break-all;
+}
+
+.key-display.secure {
+    letter-spacing: 2px;
+    color: var(--text-light);
+}
+
+.key-info {
+    font-size: 0.85rem;
+    color: var(--text-light);
+    display: flex;
+    align-items: flex-start;
+}
+
+.key-info i {
+    margin-right: 8px;
+    margin-top: 3px;
+    color: var(--info-color);
+}
+
+.key-info.warning i {
+    color: var(--warning-color);
+}
+
+.key-actions {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.key-security-notice {
+    background-color: rgba(46, 204, 113, 0.1);
+    border-left: 3px solid var(--success-color);
+    padding: 15px;
+    border-radius: var(--button-border-radius);
+    display: flex;
+    align-items: flex-start;
+}
+
+.key-security-notice i {
+    margin-right: 10px;
+    margin-top: 3px;
+    color: var(--success-color);
+}
+
+.key-security-notice p {
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+/* Activity Tab */
+.activity-timeline {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.activity-timeline h3 {
+    margin-bottom: 25px;
+    font-size: 1.3rem;
+}
+
+.timeline {
+    position: relative;
+    padding-left: 40px;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 15px;
+    width: 2px;
+    background-color: var(--border-color);
+}
+
+.timeline-item {
+    position: relative;
+    margin-bottom: 30px;
+}
+
+.timeline-icon {
+    position: absolute;
+    left: -40px;
+    width: 30px;
+    height: 30px;
+    background-color: var(--primary-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 0.9rem;
+    z-index: 10;
+}
+
+.timeline-content {
+    background-color: var(--card-background);
+    border: 1px solid var(--border-color);
+    border-radius: var(--card-border-radius);
+    padding: 15px;
+}
+
+.timeline-content h4 {
+    margin-bottom: 8px;
+}
+
+.timeline-content p {
+    margin-bottom: 10px;
+    color: var(--text-color);
+    line-height: 1.5;
+}
+
+.timeline-date {
+    font-size: 0.85rem;
+    color: var(--text-light);
+}
+
+/* Blockchain Tab */
+.blockchain-visualization-container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.blockchain-visualization-container h3 {
+    margin-bottom: 25px;
+    font-size: 1.3rem;
+}
+
+.blockchain-stats {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.stat-card {
+    flex: 1;
+    min-width: 200px;
+    background-color: var(--card-background);
+    border: 1px solid var(--border-color);
+    border-radius: var(--card-border-radius);
+    padding: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.stat-icon {
+    width: 50px;
+    height: 50px;
+    background-color: rgba(52, 152, 219, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 15px;
+    color: var(--primary-color);
+    font-size: 1.3rem;
+}
+
+.stat-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.blockchain-viewer {
+    margin-top: 30px;
+}
+
+.blocks-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.blockchain-block {
+    background-color: var(--card-background);
+    border: 1px solid var(--border-color);
+    border-radius: var(--card-border-radius);
+    overflow: hidden;
+    transition: all var(--transition-speed);
+}
+
+.blockchain-block:hover {
+    box-shadow: var(--hover-shadow);
+}
+
+.block-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 15px;
+    background-color: rgba(52, 152, 219, 0.1);
+    font-weight: 500;
+}
+
+.block-index {
+    color: var(--primary-color);
+}
+
+.block-timestamp {
+    font-size: 0.9rem;
+    color: var(--text-light);
+}
+
+.block-content {
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.block-data {
+    flex: 1;
+}
+
+.data-item {
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+}
+
+.data-label {
+    min-width: 120px;
+    color: var(--text-light);
+}
+
+.data-value {
+    font-family: monospace;
+}
+
+.data-value.hash,
+.data-value.prev-hash {
+    color: var(--primary-color);
+}
+
+.block-entries {
+    display: flex;
+    align-items: center;
+}
+
+.entries-count {
+    margin-right: 10px;
+    font-size: 0.9rem;
+    color: var(--text-light);
+}
+
+.block-expanded {
+    padding: 15px;
+    border-top: 1px solid var(--border-color);
+    background-color: rgba(52, 152, 219, 0.05);
+}
+
+.block-entries-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.block-entry {
+    padding: 10px;
+    background-color: var(--card-background);
+    border-radius: var(--button-border-radius);
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+}
+
+.entry-type {
+    display: flex;
+    align-items: center;
+}
+
+.entry-type i {
+    margin-right: 8px;
+    color: var(--primary-color);
+}
+
+.entry-id {
+    color: var(--text-light);
+}
+
+.entry-timestamp {
+    color: var(--text-light);
+}
+
+/* Empty State */
+.empty-state.small {
+    padding: 30px;
+}
+
+.empty-state.small .empty-icon {
+    font-size: 2rem;
+    margin-bottom: 15px;
+}
+
+.empty-state.small h3 {
+    font-size: 1.2rem;
+    margin-bottom: 8px;
+}
+
+/* Responsive Styles */
+@media (max-width: 800px) {
+    .profile-avatar-large {
+        width: 80px;
+        height: 80px;
+        bottom: -40px;
+    }
+    
+    .profile-details {
+        padding: 50px 20px 20px;
+    }
+    
+    .tab-btn {
+        padding: 12px 15px;
+        font-size: 0.9rem;
+    }
+    
+    .tab-content {
+        padding: 20px;
+    }
+    
+    .posts-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .blockchain-stats {
+        flex-direction: column;
+    }
+    
+    .block-content {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .block-entries {
+        margin-top: 15px;
+        width: 100%;
+        justify-content: space-between;
+    }
+    
+    .block-entry {
+        flex-direction: column;
+        gap: 5px;
+    }
+}

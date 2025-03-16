@@ -1,0 +1,159 @@
+/* Create Post Page Styles */
+.create-post-container {
+    max-width: 800px;
+    margin: 20px auto;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 25px;
+}
+
+.create-post-form {
+    margin-top: 20px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #333;
+}
+
+.form-group textarea {
+    width: 100%;
+    min-height: 150px;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+    resize: vertical;
+}
+
+.form-group input[type="text"],
+.form-group input[type="file"],
+.form-group select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.form-hint {
+    display: block;
+    margin-top: 5px;
+    font-size: 12px;
+    color: #777;
+}
+
+.char-counter {
+    display: block;
+    text-align: right;
+    margin-top: 5px;
+    color: #777;
+    font-size: 12px;
+}
+
+.char-counter.error {
+    color: #e74c3c;
+}
+
+.form-actions {
+    margin-top: 30px;
+    display: flex;
+    gap: 10px;
+}
+
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.btn-primary {
+    background-color: #4a6fa5;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #3a5982;
+}
+
+.btn-secondary {
+    background-color: #e0e0e0;
+    color: #333;
+}
+
+.btn-secondary:hover {
+    background-color: #d0d0d0;
+}
+
+/* Attachment preview */
+.attachment-preview {
+    margin-top: 10px;
+    max-width: 100%;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.attachment-preview img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .create-post-container {
+        margin: 10px;
+        padding: 15px;
+    }
+    
+    .form-actions {
+        flex-direction: column;
+    }
+    
+    .btn {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}
+
+/* Dark mode support */
+.dark-mode .create-post-container {
+    background-color: #2a2a2a;
+    color: #e0e0e0;
+}
+
+.dark-mode .form-group label {
+    color: #ccc;
+}
+
+.dark-mode .form-hint,
+.dark-mode .char-counter {
+    color: #999;
+}
+
+.dark-mode .form-group textarea,
+.dark-mode .form-group input,
+.dark-mode .form-group select {
+    background-color: #333;
+    border-color: #555;
+    color: #e0e0e0;
+}
+
+.dark-mode .btn-secondary {
+    background-color: #444;
+    color: #e0e0e0;
+}
+
+.dark-mode .btn-secondary:hover {
+    background-color: #555;
+}

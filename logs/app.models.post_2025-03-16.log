@@ -1,0 +1,1 @@
+2025-03-16 04:12:18 - app.models.post - ERROR - Failed to sign post: SigningKey must be created from a 32 byte seed

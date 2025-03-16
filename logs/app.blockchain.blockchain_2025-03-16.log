@@ -1,0 +1,8 @@
+2025-03-16 03:42:19 - app.blockchain.blockchain - INFO - Creating genesis block for user c29b87b0-bd35-4090-a693-483406721d9c
+2025-03-16 03:42:19 - app.blockchain.blockchain - INFO - Mining block 0 with difficulty 4...
+2025-03-16 03:42:19 - app.blockchain.blockchain - INFO - Block 0 mined successfully with hash 0000ecf56b711eaaad6bf7488858983d1d771d565b01cf9e01a53b7d9c8f3625
+2025-03-16 03:42:19 - app.blockchain.blockchain - INFO - Genesis block created successfully
+2025-03-16 04:00:15 - app.blockchain.blockchain - INFO - Creating genesis block for user c29b87b0-bd35-4090-a693-483406721d9c
+2025-03-16 04:05:24 - app.blockchain.blockchain - INFO - Creating genesis block for user c29b87b0-bd35-4090-a693-483406721d9c
+2025-03-16 04:05:58 - app.blockchain.blockchain - INFO - Creating genesis block for user c29b87b0-bd35-4090-a693-483406721d9c
+2025-03-16 04:06:58 - app.blockchain.blockchain - INFO - Creating genesis block for user c29b87b0-bd35-4090-a693-483406721d9c
