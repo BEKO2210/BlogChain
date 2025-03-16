@@ -10,7 +10,8 @@ cssmin==0.2.0            # CSS minifier
 jsmin==3.0.1             # JavaScript minifier
 
 # Database
-leveldb==0.201           # Key-value storage for blockchain data
+# leveldb==0.201          # Key-value storage for blockchain data - Removed due to build issues
+plyvel==1.5.0            # Python interface to LevelDB (alternative to leveldb)
 
 # Utilities
 pyOpenSSL==23.2.0        # SSL/TLS functionality
